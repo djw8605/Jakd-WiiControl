@@ -1,10 +1,15 @@
 
 
+WIIUSE_DIR = wiiuse/src/release-x86_64-redhat-linux
+WIIUSE_LIB = $(WIIUSE_DIR)/libwiiuse.so
+
 INCLUDES = -Iwiiuse/src/
 
 CPPFLAGS = -Wall -fPIC -funroll-loops $(INCLUDES)
 CXXFLAGS = 
-LIBS = -lglut -lm -lGL -l GLU
+LIBS = -lglut -lm -lGL -lGLU -lwiiuse
+LDFLAGS = -L$(WIIUSE_DIR)
+
 CXX = g++
 
 WIIINTERFACE_SRC = WiiInterface.cpp
@@ -18,15 +23,17 @@ OBJS = $(MAIN_SRC:%.cpp=%.o) $(CAMERA_SRC:%.cpp=Camera/%.o) $(WIIINTERFACE_SRC:%
 
 all: wiicontrol
 
+
 wiicontrol: $(OBJS) wiiuse
 	$(CXX) $(CPPFLAGS) $(LDFLAGS) $(OBJS) $(INCLUDES) -o wiicontrol $(LIBS)
 
-wiiuse:
-	cd wiiuse
-	make
+wiiuse: $(WIIUSE_LIB)
 
+$(WIIUSE_LIB):
+	@$(MAKE) -C wiiuse/src	
 
 clean:
+	@$(MAKE) -C wiiuse/src clean
 	rm -f $(OBJS)
 
 
