@@ -7,7 +7,7 @@
  * 
  */
 
-
+#include "config.h"
 #include <GL/glut.h>
 
 
@@ -16,7 +16,7 @@ void reshape(int w, int h)
 	glViewport(0, 0, (GLsizei) w, (GLsizei) h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(fov, (GLfloat) w/ (GLfloat) h, 40, 5000.0);
+	gluPerspective(FOV, (GLfloat) w/ (GLfloat) h, 40, 5000.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	

@@ -10,7 +10,7 @@ Camera::~Camera()
 
 
 
-static Camera* Camera::GetInstance()
+Camera* Camera::GetInstance()
 {
 	
 	static Camera* cam = new Camera();

@@ -11,7 +11,7 @@ void StartWiiMotes()
 {
 	
 	/* Initialize wiiuse */
-	wiimotes = wiiuse_init(MAX_WIIMOTES)
+	wiimotes = wiiuse_init(MAX_WIIMOTES);
 	
 	
 }
