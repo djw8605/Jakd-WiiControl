@@ -14,6 +14,7 @@ public:
 	
 	void positionCamera();
 	
+	void ProcessCoordinates(short dot1x, short dot1y, short dot2x, short dot2y);
 };
 
 #endif /*CAMERA_H_*/

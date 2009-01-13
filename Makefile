@@ -3,7 +3,7 @@
 WIIUSE_DIR = wiiuse/src/release-x86_64-redhat-linux
 WIIUSE_LIB = $(WIIUSE_DIR)/libwiiuse.so
 
-INCLUDES = -Iwiiuse/src/
+INCLUDES = -Iwiiuse/src/ -I.
 
 CPPFLAGS = -Wall -fPIC -funroll-loops $(INCLUDES)
 CXXFLAGS = 

@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	glutSpecialFunc(specialKeyboard);
 	glutIdleFunc(display);
 	
-	
+	/* Intialize everything */
 	init();
 	
 	/* Connect Wii Motes */
