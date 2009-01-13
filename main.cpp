@@ -1,7 +1,9 @@
 
 
 #include <GL/glut.h>
-
+#include "display.h"
+#include "events.h"
+#include "WiiInterface/WiiInterface.h"
 
 
 int main(int argc, char *argv[])
@@ -27,7 +29,7 @@ int main(int argc, char *argv[])
 	
 	
 	/* Connect Wii Motes */
-	
+	StartWiiMotes();
 	
 	/* Enter Game Loop */
 	
