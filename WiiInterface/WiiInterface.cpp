@@ -6,7 +6,7 @@
 
 #define MAX_WIIMOTES 2
 wiimote** wiimotes;
-
+int numConnectedMotes = 0;
 
 void StartWiiMotes()
 {
@@ -97,6 +97,9 @@ void ProcessWiiEvents()
     /* 
      *  Used to process events from the wii
      */
+    
+    if (numConnectedMotes < 2)
+        return;
     
     if (wiiuse_poll(wiimotes, MAX_WIIMOTES))
     {

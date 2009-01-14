@@ -25,6 +25,7 @@ void MainMenu::Init()
     
     glMatrixMode(GL_MODELVIEW);
     glDisable(GL_LIGHTING);
+    glEnable(GL_BLEND);
 }
 
 void MainMenu::DeInit()
@@ -43,7 +44,7 @@ void MainMenu::Render()
     
 
     glTranslatef(0, 0, 0);
-    glColor4f(0.0, 0.0, 1.0, 1.0);
+    glColor4f(0.0, 0.0, 1.0, 0.5);
     glBegin(GL_QUADS);
 
     glVertex2f(100, 100);
