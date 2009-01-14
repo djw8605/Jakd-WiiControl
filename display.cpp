@@ -1,8 +1,10 @@
 
 #include <GL/glut.h>
+#include "display.h"
 #include "Camera/Camera.h"
 #include "WiiInterface/WiiInterface.h"
 #include "AbstractScene/AbstractScene.h"
+#include "MainMenu/MainMenu.h"
 
 struct SceneNode {
     AbstractScene* scene;
@@ -15,10 +17,11 @@ SceneNode* currentScene = NULL;
 void InitDisplay()
 {
     /* Add all of the scenes here */
-    
+    AddScene(new MainMenu());
     
     /* Internal Intializers */
     currentScene = scenes;
+    currentScene->scene->Init();
     
     
 }
@@ -42,9 +45,10 @@ void display()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     glPushMatrix();
+   
+     /* Move Camera */
+    /*camera->positionCamera(); */
     
-    /* Move Camera */
-    camera->positionCamera();
 	
     /* List everything to display to the screen here */
     displayScene();
@@ -63,9 +67,9 @@ void AddScene(AbstractScene* toAdd)
     SceneNode* tmpNode = scenes;
     if (tmpNode == NULL)
     {
-        tmpNode = new SceneNode;
-        tmpNode->scene = toAdd;
-        tmpNode->next = NULL;
+        scenes = new SceneNode;
+        scenes->scene = toAdd;
+        scenes->next = NULL;
 
     }
     else
