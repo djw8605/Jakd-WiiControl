@@ -71,6 +71,9 @@ void WiiMotesInstalled()
 
 void ProcessPlayerLocation()
 {
+    /*
+     * Process the player's location from the mounted wiimote
+     */
     
     /* Need at least 2 visible IR Dots */
     if(wiimotes[0]->ir.dot[0].visible && wiimotes[0]->ir.dot[1].visible)
@@ -80,7 +83,7 @@ void ProcessPlayerLocation()
         short dot2x = wiimotes[0]->ir.dot[1].rx;
         short dot2y = wiimotes[0]->ir.dot[1].ry;
         
-        
+        camera->ProcessCoordinates(dot1x, dot1y, dot2x, dot2y);
         
     } else {
         return;
