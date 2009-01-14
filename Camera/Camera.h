@@ -19,6 +19,7 @@ public:
 private:
 	float eyeX, eyeY, eyeZ;
 	float centerX, centerY, centerZ;
+	float upX, upY, upZ;
 };
 
 #endif /*CAMERA_H_*/

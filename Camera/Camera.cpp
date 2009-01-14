@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include <GL/glut.h>
+#include <GL/glu.h>
 #include <math.h>
 
 
@@ -27,6 +28,10 @@ Camera* Camera::GetInstance()
 void Camera::positionCamera()
 {
 
+    
+    gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+    
+    
 
 
 }

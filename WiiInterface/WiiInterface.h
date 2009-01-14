@@ -3,6 +3,8 @@
 
 void StartWiiMotes();
 
+void ProcessWiiEvents();
+
 
 
 #endif /*WIIINTERFACE_H_*/
