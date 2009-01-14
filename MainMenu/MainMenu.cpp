@@ -46,7 +46,6 @@ void MainMenu::Render()
     glTranslatef(0, 0, 0);
     glColor4f(0.0, 0.0, 1.0, 0.5);
     glBegin(GL_QUADS);
-
     glVertex2f(100, 100);
     glVertex2f(900, 100);
     glVertex2f(900, 900);

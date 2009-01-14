@@ -5,6 +5,7 @@
 #include "WiiInterface/WiiInterface.h"
 #include "AbstractScene/AbstractScene.h"
 #include "MainMenu/MainMenu.h"
+#include "FreeType/FreeType.h"
 
 struct SceneNode {
     AbstractScene* scene;
@@ -95,4 +96,27 @@ AbstractScene* GetDisplayed()
     
     
 }
+
+freetype::font_data* GetFont()
+{
+    static freetype::font_data* font = NULL;
+    
+    if (font == NULL)
+    {
+        try
+        {
+            font = new freetype::font_data;
+            font->init("Test.ttf", 16);
+        }
+        catch (std::exception &e)
+        {
+            printf ("%s\n", e.what());
+        }
+
+    }
+    
+    
+    
+}
+
 
