@@ -79,18 +79,27 @@ void Camera::ProcessCoordinates(short dot1x, short dot1y, short dot2x, short dot
     float avgY = (dot1y + dot2y) / 2.0f;
 
     /*
-     *
+     * sin(theta) = opposite/adjacent, solve for opposite (eyeX)
      */
     eyeX = movementScaling * sin(radiansPerPixel * (avgX - 512)) * eyeY;
 
+    /*
+     * Angle above the midpoint the user is
+     */
     float relativeVerticalAngle = (avgY - 384) * radiansPerPixel;
 
+    /*
+     * Initial camera angle (angle that the camera is mounted)
+     */
     float cameraVerticalAngle = 0;
-
+    
+    /*
+     * Nearly the same thing as eyeX, but take in account the mounted angle of the wiimote
+     */
     eyeZ = .5f + (float)(movementScaling * sin(relativeVerticalAngle + cameraVerticalAngle) * eyeY);
 
     eyeY += centerY;
-
+    
     eyeY *= -1;
 
     eyeX += centerX;
