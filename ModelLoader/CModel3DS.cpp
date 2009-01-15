@@ -38,13 +38,13 @@ CModel3DS::CModel3DS(std::string filename)
         
         
         GLubyte* name = (GLubyte*)"glGenBuffersARB";
-                        glGenBuffersARB = (PFNGLGENBUFFERSARBPROC) glXGetProcAddress(name);
-                                name = (GLubyte*)"glBindBufferARB";
-                        glBindBufferARB = (PFNGLBINDBUFFERARBPROC) glXGetProcAddress(name);
-                                name = (GLubyte*)"glBufferDataARB";
-                        glBufferDataARB = (PFNGLBUFFERDATAARBPROC) glXGetProcAddress(name);
-                                name = (GLubyte*)"glDeleteBuffersARB";
-                        glDeleteBuffersARB = (PFNGLDELETEBUFFERSARBPROC) glXGetProcAddress(name);
+    glGenBuffersARB = (PFNGLGENBUFFERSARBPROC) glXGetProcAddress(name);
+    name = (GLubyte*)"glBindBufferARB";
+    glBindBufferARB = (PFNGLBINDBUFFERARBPROC) glXGetProcAddress(name);
+    name = (GLubyte*)"glBufferDataARB";
+    glBufferDataARB = (PFNGLBUFFERDATAARBPROC) glXGetProcAddress(name);
+    name = (GLubyte*)"glDeleteBuffersARB";
+    glDeleteBuffersARB = (PFNGLDELETEBUFFERSARBPROC) glXGetProcAddress(name);
         
         
 }
