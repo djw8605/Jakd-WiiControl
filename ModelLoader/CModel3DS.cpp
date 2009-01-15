@@ -1,11 +1,26 @@
 #include "CModel3DS.h"
 
+#include <GL/glut.h>
+#include <GL/glx.h>
+
+#include <lib3ds/file.h>
+#include <lib3ds/mesh.h>
+
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <cassert>
 
 /*
  * From http://donkerdump.nl/node/207
  * Unable to find name of author (looks German)
  * 
  */
+
+PFNGLGENBUFFERSARBPROC glGenBuffersARB = NULL;                                  // VBO Name Generation Procedure
+PFNGLBINDBUFFERARBPROC glBindBufferARB = NULL;                                  // VBO Bind Procedure
+PFNGLBUFFERDATAARBPROC glBufferDataARB = NULL;                                  // VBO Data Loading Procedure
+PFNGLDELETEBUFFERSARBPROC glDeleteBuffersARB = NULL;                            // VBO Deletion Procedure
 
 
 
@@ -20,13 +35,25 @@ CModel3DS::CModel3DS(std::string filename)
         {
                 throw strcat("Unable to load ", filename.c_str());
         }
+        
+        
+        GLubyte* name = (GLubyte*)"glGenBuffersARB";
+                        glGenBuffersARB = (PFNGLGENBUFFERSARBPROC) glXGetProcAddress(name);
+                                name = (GLubyte*)"glBindBufferARB";
+                        glBindBufferARB = (PFNGLBINDBUFFERARBPROC) glXGetProcAddress(name);
+                                name = (GLubyte*)"glBufferDataARB";
+                        glBufferDataARB = (PFNGLBUFFERDATAARBPROC) glXGetProcAddress(name);
+                                name = (GLubyte*)"glDeleteBuffersARB";
+                        glDeleteBuffersARB = (PFNGLDELETEBUFFERSARBPROC) glXGetProcAddress(name);
+        
+        
 }
 
 // Destructor
 CModel3DS::~CModel3DS()
 {
-        glDeleteBuffers(1, &m_VertexVBO);
-        glDeleteBuffers(1, &m_NormalVBO);
+        glDeleteBuffersARB(1, &m_VertexVBO);
+        glDeleteBuffersARB(1, &m_NormalVBO);
         
         if(m_model != NULL)
         {
@@ -65,14 +92,14 @@ void CModel3DS::CreateVBO()
         }
         
         // Generate a Vertex Buffer Object and store it with our vertices
-        glGenBuffers(1, &m_VertexVBO);
-        glBindBuffer(GL_ARRAY_BUFFER, m_VertexVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Lib3dsVector) * 3 * m_TotalFaces, vertices, GL_STATIC_DRAW);
+        glGenBuffersARB(1, &m_VertexVBO);
+        glBindBufferARB(GL_ARRAY_BUFFER, m_VertexVBO);
+        glBufferDataARB(GL_ARRAY_BUFFER, sizeof(Lib3dsVector) * 3 * m_TotalFaces, vertices, GL_STATIC_DRAW);
         
         // Generate another Vertex Buffer Object and store the normals in it
-        glGenBuffers(1, &m_NormalVBO);
-        glBindBuffer(GL_ARRAY_BUFFER, m_NormalVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Lib3dsVector) * 3 * m_TotalFaces, normals, GL_STATIC_DRAW);
+        glGenBuffersARB(1, &m_NormalVBO);
+        glBindBufferARB(GL_ARRAY_BUFFER, m_NormalVBO);
+        glBufferDataARB(GL_ARRAY_BUFFER, sizeof(Lib3dsVector) * 3 * m_TotalFaces, normals, GL_STATIC_DRAW);
         
         // Clean up our allocated memory
         delete vertices;
@@ -108,11 +135,11 @@ void CModel3DS::Draw() const
         glEnableClientState(GL_NORMAL_ARRAY);
         
         // Bind the vbo with the normals
-        glBindBuffer(GL_ARRAY_BUFFER, m_NormalVBO);
+        glBindBufferARB(GL_ARRAY_BUFFER, m_NormalVBO);
         // The pointer for the normals is NULL which means that OpenGL will use the currently bound vbo
         glNormalPointer(GL_FLOAT, 0, NULL);
         
-        glBindBuffer(GL_ARRAY_BUFFER, m_VertexVBO);
+        glBindBufferARB(GL_ARRAY_BUFFER, m_VertexVBO);
         glVertexPointer(3, GL_FLOAT, 0, NULL);
         
         // Render the triangles

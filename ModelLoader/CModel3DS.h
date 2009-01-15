@@ -1,6 +1,12 @@
 #ifndef CMODEL3DS_H_
 #define CMODEL3DS_H_
 
+#include <GL/glut.h>
+#include <string>
+#include <lib3ds/file.h>
+#include <lib3ds/mesh.h>
+
+
 class CModel3DS
 {
         public:
