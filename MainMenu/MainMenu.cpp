@@ -1,6 +1,8 @@
 #include "MainMenu.h"
 #include <GL/glut.h>
 #include <stdio.h>
+#include "display.h"
+#include "FreeType/FreeType.h"
 
 MainMenu::MainMenu()
 {
@@ -51,6 +53,9 @@ void MainMenu::Render()
     glVertex2f(900, 900);
     glVertex2f(100, 900);
     glEnd();
+    
+    glColor4f(1.0, 1.0, 1.0, 1.0);
+    freetype::print(*(GetFont()), 0, 1000, "Welcome to WiiControl Main Menu");
     
     
     

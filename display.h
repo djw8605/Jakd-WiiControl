@@ -2,6 +2,7 @@
 #define DISPLAY_H_
 
 #include "AbstractScene/AbstractScene.h"
+#include "FreeType/FreeType.h"
 
 /* Get everything setup */
 void InitDisplay();
@@ -20,6 +21,9 @@ void NextScene();
 
 /* Previous Scene */
 void PrevScene();
+
+/* Get font to print to screen */
+freetype::font_data* GetFont();
 
 
 

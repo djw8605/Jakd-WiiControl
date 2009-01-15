@@ -106,7 +106,7 @@ freetype::font_data* GetFont()
         try
         {
             font = new freetype::font_data;
-            font->init("Test.ttf", 16);
+            font->init("FreeType/Test.ttf", 16);
         }
         catch (std::exception &e)
         {
@@ -114,6 +114,8 @@ freetype::font_data* GetFont()
         }
 
     }
+    
+    return font;
     
     
     

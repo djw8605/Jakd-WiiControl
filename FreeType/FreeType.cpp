@@ -216,7 +216,7 @@ void print(const font_data &ft_font, float x, float y, const char *fmt, ...)  {
 	
 	// We want a coordinate system where things coresponding to window pixels.
 	pushScreenCoordinateMatrix();					
-	
+
 	GLuint font=ft_font.list_base;
 	float h=ft_font.h/.63f;						//We make the height about 1.5* that of
 	
