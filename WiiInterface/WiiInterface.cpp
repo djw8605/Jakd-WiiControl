@@ -10,11 +10,11 @@ int numConnectedMotes = 0;
 
 void StartWiiMotes()
 {
-	
+
 	/* Initialize wiiuse */
 	wiimotes = wiiuse_init(MAX_WIIMOTES);
-	
-	
+
+
 }
 
 
@@ -52,20 +52,20 @@ void handle_event(struct wiimote_t* wm)
 
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_PLUS))
         wiiuse_set_ir(wm, 1);
-	
-	
-	
+
+
+
 }
 
 
 void WiiMotesInstalled()
 {
-	
-	for (int i = 0; i < MAX_WIIMOTES; i++) 
+
+	for (int i = 0; i < MAX_WIIMOTES; i++)
 	{
 	  wiiuse_set_ir(wiimotes[i], 1);
 	}
-	
+
 }
 
 
@@ -74,7 +74,7 @@ void ProcessPlayerLocation()
     /*
      * Process the player's location from the mounted wiimote
      */
-    
+
     /* Need at least 2 visible IR Dots */
     if(wiimotes[0]->ir.dot[0].visible && wiimotes[0]->ir.dot[1].visible)
     {
@@ -82,25 +82,25 @@ void ProcessPlayerLocation()
         short dot1y = wiimotes[0]->ir.dot[0].ry;
         short dot2x = wiimotes[0]->ir.dot[1].rx;
         short dot2y = wiimotes[0]->ir.dot[1].ry;
-        
-        camera->ProcessCoordinates(dot1x, dot1y, dot2x, dot2y);
-        
+
+        _camera->ProcessCoordinates(dot1x, dot1y, dot2x, dot2y);
+
     } else {
         return;
     }
-    
-    
+
+
 }
 
 void ProcessWiiEvents()
 {
-    /* 
+    /*
      *  Used to process events from the wii
      */
-    
+
     if (numConnectedMotes < 2)
         return;
-    
+
     if (wiiuse_poll(wiimotes, MAX_WIIMOTES))
     {
         int i = 0;
@@ -129,10 +129,10 @@ void ProcessWiiEvents()
         }
 
     }
-	
-	
+
+
     ProcessPlayerLocation();
-	
+
 }
 
 
