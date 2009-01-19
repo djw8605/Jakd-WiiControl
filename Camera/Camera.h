@@ -1,7 +1,7 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
-#define camera Camera::GetInstance()
+#define _camera Camera::GetInstance()
 
 class Camera
 {

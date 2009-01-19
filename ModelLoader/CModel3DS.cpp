@@ -86,6 +86,7 @@ void CModel3DS::CreateVBO()
                         for(unsigned int i = 0;i < 3;i++)
                         {
                                 memcpy(&vertices[FinishedFaces*3 + i], mesh->pointL[face->points[i]].pos, sizeof(Lib3dsVector));
+                                
                         }
                         FinishedFaces++;
                 }

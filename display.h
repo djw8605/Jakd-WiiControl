@@ -25,6 +25,8 @@ void PrevScene();
 /* Get font to print to screen */
 freetype::font_data* GetFont();
 
+/* Get the time difference from last render */
+double getTime();
 
 
 

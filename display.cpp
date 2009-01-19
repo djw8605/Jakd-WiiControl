@@ -1,5 +1,7 @@
-
 #include <GL/glut.h>
+#include <sys/time.h>
+#include <unistd.h>
+
 #include "display.h"
 #include "Camera/Camera.h"
 #include "WiiInterface/WiiInterface.h"
@@ -15,8 +17,14 @@ struct SceneNode {
 SceneNode* scenes = NULL;
 SceneNode* currentScene = NULL;
 
+/* Definition of function below */
+void updateTime();
+
 void InitDisplay()
 {
+    updateTime();
+    
+    
     /* Add all of the scenes here */
     AddScene(new MainMenu());
     
@@ -38,6 +46,8 @@ void displayScene()
 
 void display()
 {
+    /* Update the time for movement, and the like */
+    updateTime();
 	
     /* Process Events from wiimotes */
     ProcessWiiEvents();
@@ -120,5 +130,23 @@ freetype::font_data* GetFont()
     
     
 }
+
+double storeTime = 0, lastTime = 0;
+double getTime() {
+    return storeTime - lastTime;
+}
+
+void updateTime() {
+    
+    lastTime = storeTime;
+    timeval t;
+    gettimeofday(&t, 0);
+    //store seconds since epoch
+    storeTime = t.tv_sec;
+    //store micoseconds of that second, so divide by million
+    storeTime += ((double)t.tv_usec / 1000000);
+    
+}
+
 
 
