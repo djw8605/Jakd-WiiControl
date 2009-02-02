@@ -5,6 +5,8 @@
 #include "FreeType/FreeType.h"
 #include "config.h"
 #include "ModelLoader/CModel3DS.h"
+#include "Camera/Camera.h"
+#include "Cursor/WiiCursor.h"
 
 MainMenu::MainMenu()
 {
@@ -30,8 +32,8 @@ void MainMenu::Init()
     glMatrixMode(GL_MODELVIEW);
         
 
-   m_model = new CModel3DS("snowman.3ds");
-   m_model->CreateVBO();
+   //m_model = new CModel3DS("snowman.3ds");
+   //m_model->CreateVBO();
     
 }
 
@@ -48,7 +50,7 @@ void MainMenu::Render()
 {
     DrawBackground();
     DrawMenu();
-    
+    _cursor->Render();
     
     
 }
@@ -88,12 +90,14 @@ void MainMenu::DrawBackground()
 
 
            glLoadIdentity();
-            gluLookAt(0.0, -30.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+           
+            //gluLookAt(0.0, -30.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+           _camera->positionCamera();
             glPushMatrix();
             
             
             glTranslatef(0, 0, 0);
-            glColor4f(1.0, 1.0, 1.0, 1.0);
+            glColor4f(1.0, 0.0, 0.0, 1.0);
             
           /*  glBegin(GL_LINES);
             glVertex3f(-1000, 0, 0);
@@ -106,7 +110,7 @@ void MainMenu::DrawBackground()
             glVertex3f(0.0, 0.0, 1000);
             glEnd();
             */
-        /*    glBegin(GL_LINES);
+            glBegin(GL_LINES);
             for(int i = -500; i < 500; i+=10) {
             glVertex3f(-1000, 0.0, i);
             glVertex3f(1000, 0.0, i);
@@ -120,12 +124,12 @@ void MainMenu::DrawBackground()
             }
             
             glEnd();
-           */ 
-            static double angle = 0;
+           
+            /*static double angle = 0;
             angle += getTime() * 10.0;
             glRotatef(angle, 0.0, 1.0, 0.0);
             m_model->Draw();
-            
+            */
             
             
             glPopMatrix();

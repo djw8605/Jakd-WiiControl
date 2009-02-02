@@ -12,6 +12,9 @@ int main(int argc, char *argv[])
 	
 	/* Process Arguments */
 	
+    
+    /* Connect Wii Motes */
+        StartWiiMotes();
 	
 	/* Setup Window */
 	glutInit(&argc, argv);
@@ -19,7 +22,7 @@ int main(int argc, char *argv[])
 	glutInitWindowSize(1024, 768);
 	glutInitWindowPosition(0,0);
 	glutCreateWindow("WiiControl");
-	glutFullScreen();
+	//glutFullScreen();
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 	glutMouseFunc(mouse);
@@ -30,8 +33,7 @@ int main(int argc, char *argv[])
 	/* Intialize everything */
 	init();
 	
-	/* Connect Wii Motes */
-	StartWiiMotes();
+
 	
 	/* Enter Game Loop */
 	

@@ -2,12 +2,16 @@
 #include <GL/glut.h>
 #include <GL/glu.h>
 #include <math.h>
-
+#include <iostream>
 
 #define PI 3.14159265
 
 Camera::Camera()
 {
+    eyeX = 0.0;
+    eyeY = -30.0;
+    eyeZ = 10.0;
+    centerX = 0.0; centerY = 0.0; centerZ = 0.0; upX = 0.0; upY = 0.0; upZ = 1.0;
 }
 
 Camera::~Camera()
@@ -30,6 +34,9 @@ void Camera::positionCamera()
 
     
     gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+    
+    //std::cout << eyeX << ", " << eyeY << ", " << eyeZ << std::endl;
+    
     
     
 

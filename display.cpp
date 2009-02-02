@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <iostream>
 
 #include "display.h"
 #include "Camera/Camera.h"
@@ -46,6 +47,7 @@ void displayScene()
 
 void display()
 {
+    
     /* Update the time for movement, and the like */
     updateTime();
 	
