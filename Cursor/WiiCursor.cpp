@@ -1,9 +1,38 @@
 #include "WiiCursor.h"
 #include <GL/glut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include "TextureLoader/CTargaImage.h"
 
+#include <iostream>
+
+using namespace std;
 
 WiiCursor::WiiCursor()
 {
+    CTargaImage image;
+    if (!image.Load("Media/crosshair.tga"))
+    {
+        cerr << "Error opening Media/crosshair.tga" << endl;
+    }
+    else
+    {
+
+        glEnable(GL_TEXTURE_2D);
+        glGenTextures(1, &cursorTex);
+
+        glBindTexture(GL_TEXTURE_2D, cursorTex);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+        gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, image.GetWidth(), image.GetHeight(),
+        GL_RGB, GL_UNSIGNED_BYTE, image.GetImage());
+
+        image.Release();
+
+    }
+
 }
 
 WiiCursor::~WiiCursor()
@@ -36,11 +65,24 @@ void WiiCursor::Render()
     
     glBegin(GL_QUADS);
     
-    glVertex2f(cursorX-10, cursorY-10);
-    glVertex2f(cursorX-10, cursorY+10);
-    glVertex2f(cursorX+10, cursorY+10);
-    glVertex2f(cursorX+10, cursorY-10);
+    glTranslatef(cursorX, cursorY, 0.0);
+    glColor4f(0.0, 0.0, 0.0, 0.0);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, cursorTex);
+    
+    glTexCoord2f(0.0, 0.0);
+    glVertex2f(-10.0, -10.0);
+    
+    glTexCoord2f(0.0, 1.0);
+    glVertex2f(-10.0, 10.0);
+    
+    glTexCoord2f(1.0, 1.0);
+    glVertex2f(10.0, 10.0);
+    
+    glTexCoord2f(1.0, 0.0);
+    glVertex2f(10.0, -10.0);
 
+    glDisable(GL_TEXTURE_2D);
     glEnd();
     
     glPopMatrix();

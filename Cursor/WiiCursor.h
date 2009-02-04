@@ -1,6 +1,9 @@
 #ifndef WIICURSOR_H_
 #define WIICURSOR_H_
 
+
+#include <GL/gl.h>
+
 #define _cursor WiiCursor::GetInstance()
 
 class WiiCursor
@@ -15,6 +18,7 @@ public:
 private:
     float cursorX;
     float cursorY;
+    GLuint cursorTex;
 };
 
 #endif /*WIICURSOR_H_*/

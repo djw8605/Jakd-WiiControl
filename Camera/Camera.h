@@ -15,6 +15,9 @@ public:
 	void positionCamera();
 
 	void ProcessCoordinates(short dot1x, short dot1y, short dot2x, short dot2y);
+	
+	void SetCameraLocation(float X, float Y, float Z, float newCenterX, float newCenterY, float newCenterZ);
+	
 
 private:
 	float eyeX, eyeY, eyeZ;

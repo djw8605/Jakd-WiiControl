@@ -31,10 +31,18 @@ MODELLOADER_SRC = CModel3DS.cpp
 
 WIICURSOR_SRC = WiiCursor.cpp
 
+CTARGAIMAGE_SRC = CTargaImage.cpp
+
 MAIN_SRC = main.cpp events.cpp display.cpp init.cpp
 
-SOURCES = $(MAIN_SRC) $(CAMERA_SRC:%=Camera/%) $(WIIINTERFACE_SRC:%=WiiInterface/%) $(MAINMENU_SRC:%=MainMenu/%) $(ABSTRACTSCENE_SRC:%=AbstractScene/%) $(FREETYPE_SRC:%=FreeType/%) $(MODELLOADER_SRC:%=ModelLoader/%) $(WIICURSOR_SRC:%=Cursor/%)
-OBJS = $(MAIN_SRC:%.cpp=%.o) $(CAMERA_SRC:%.cpp=Camera/%.o) $(WIIINTERFACE_SRC:%.cpp=WiiInterface/%.o) $(MAINMENU_SRC:%.cpp=MainMenu/%.o) $(ABSTRACTSCENE_SRC:%.cpp=AbstractScene/%.o) $(FREETYPE_SRC:%.cpp=FreeType/%.o) $(MODELLOADER_SRC:%.cpp=ModelLoader/%.o) $(WIICURSOR_SRC:%.cpp=Cursor/%.o)
+SOURCES = $(MAIN_SRC) $(CAMERA_SRC:%=Camera/%) $(WIIINTERFACE_SRC:%=WiiInterface/%) $(MAINMENU_SRC:%=MainMenu/%) \
+	$(ABSTRACTSCENE_SRC:%=AbstractScene/%) $(FREETYPE_SRC:%=FreeType/%) $(MODELLOADER_SRC:%=ModelLoader/%) \
+	$(WIICURSOR_SRC:%=Cursor/%) $(CTARGAIMAGE_SRC:%=TextureLoader/%)
+OBJS = $(MAIN_SRC:%.cpp=%.o) $(CAMERA_SRC:%.cpp=Camera/%.o) \
+	$(WIIINTERFACE_SRC:%.cpp=WiiInterface/%.o) $(MAINMENU_SRC:%.cpp=MainMenu/%.o) \
+	$(ABSTRACTSCENE_SRC:%.cpp=AbstractScene/%.o) $(FREETYPE_SRC:%.cpp=FreeType/%.o) \
+	$(MODELLOADER_SRC:%.cpp=ModelLoader/%.o) $(WIICURSOR_SRC:%.cpp=Cursor/%.o) \
+	$(CTARGAIMAGE_SRC:%.cpp=TextureLoader/%.o)
 
 all: wiicontrol
 

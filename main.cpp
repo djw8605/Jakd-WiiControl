@@ -5,16 +5,31 @@
 #include "events.h"
 #include "init.h"
 #include "WiiInterface/WiiInterface.h"
+#include <unistd.h>
 
 
 int main(int argc, char *argv[])
 {
-	
+	int useWiiMotes = 1;
 	/* Process Arguments */
 	
+	int option_char;
+	
+	while((option_char = getopt(argc, argv, "n")) != -1) 
+	{
+	    switch (option_char)
+	    {
+	    case 'n': useWiiMotes = 0; break;
+	    
+	    }
+	    
+	    
+	    
+	}
     
     /* Connect Wii Motes */
-        StartWiiMotes();
+	if(useWiiMotes)
+            StartWiiMotes();
 	
 	/* Setup Window */
 	glutInit(&argc, argv);
