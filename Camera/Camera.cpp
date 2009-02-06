@@ -33,9 +33,9 @@ void Camera::positionCamera()
 {
 
     
-    gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+    gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, centerX, centerY, centerZ+1.0);
     
-    std::cout << eyeX << ", " << eyeY << ", " << eyeZ << std::endl;
+    //std::cout << eyeX << ", " << eyeY << ", " << eyeZ << std::endl;
     
     
     
@@ -75,7 +75,7 @@ void Camera::ProcessCoordinates(short dot1x, short dot1y, short dot2x, short dot
      */
     float dotDistanceInMM = 15.0;
     float screenHeightInMM = 25.0;
-    float movementScaling = 5.0;
+    float movementScaling = 3.0;
 
     /*
      * remember, eyeY = forward and backward
@@ -134,9 +134,9 @@ void Camera::SetCameraLocation(float X, float Y, float Z, float newCenterX, floa
     confCenterX = X;
     confCenterY = Y;
     confCenterZ = Z;
-    newCenterX = centerX;
-    newCenterY = centerY;
-    newCenterZ = centerZ;
+    centerX = newCenterX;
+    centerY = newCenterY;
+    centerZ = newCenterZ;
     
     
 }

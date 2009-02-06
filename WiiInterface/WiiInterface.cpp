@@ -126,14 +126,14 @@ void handle_event(struct wiimote_t* wm, int index)
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_HOME))
         printf("HOME pressed\n");
 
-    if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_MINUS))
+    /*if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_MINUS))
         wiiuse_set_ir(wm, 0);
 
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_PLUS))
         wiiuse_set_ir(wm, 1);
 
     fflush(stdout);
-
+*/
 }
 
 
@@ -154,9 +154,13 @@ void ProcessPlayerLocation()
      * Process the player's location from the mounted wiimote
      */
 
-    /* Need at least 2 visible IR Dots */
-
+    /*
+    int dots = (int)wiimotes[!playerWiiIndex]->ir.num_dots;
+    if(dots < 2)
+        printf("Not enough dots visible\n");
+    */
     
+    /* Need at least 2 visible IR Dots */
     if(wiimotes[!playerWiiIndex]->ir.dot[0].visible && wiimotes[!playerWiiIndex]->ir.dot[1].visible)
     {
         short dot1x = wiimotes[!playerWiiIndex]->ir.dot[0].rx;

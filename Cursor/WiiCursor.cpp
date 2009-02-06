@@ -38,6 +38,8 @@ WiiCursor::WiiCursor()
 
 WiiCursor::~WiiCursor()
 {
+    if (cursorTex)
+        glDeleteTextures(1, &cursorTex);
 }
 
 
@@ -56,43 +58,63 @@ void WiiCursor::Render()
 
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
-    glLoadIdentity();
-    
+    //glLoadIdentity();
     gluOrtho2D(0, 1024, 0, 768);
 
     glMatrixMode(GL_MODELVIEW);
     
     glPushMatrix();
+    glDisable(GL_FOG);
     
-    glBegin(GL_QUADS);
     
     glTranslatef(cursorX, cursorY, 0.0);
-    glColor4f(0.0, 0.0, 0.0, 0.0);
+    cout << "cursorX, cursorY: " << cursorX << ", " << cursorY << endl;
     
-    if (!cursorTex)
+    /* If the cursor Texture is loaded and working */
+    if (cursorTex != 0)
     {
+        
+        glBegin(GL_QUADS);
+        glColor4f(0.0, 0.0, 1.0, 1.0);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, cursorTex);
+
+        glTexCoord2f(0.0, 0.0);
+        glVertex2f(-10.0, -10.0);
+
+        glTexCoord2f(0.0, 1.0);
+        glVertex2f(-10.0, 10.0);
+
+        glTexCoord2f(1.0, 1.0);
+        glVertex2f(10.0, 10.0);
+
+        glTexCoord2f(1.0, 0.0);
+        glVertex2f(10.0, -10.0);
+
+        glDisable(GL_TEXTURE_2D);
+        glEnd();
+
+    } else {
+        /* If the texture isn't working */
+        glColor4f(0.0, 0.0, 1.0, 0.8);
+        glBegin(GL_LINES);
+        
+        glVertex2f(-10.0, 0.0);
+        glVertex2f(10.0, 0.0);
+        
+        glVertex2f(0.0, -10.0);
+        glVertex2f(0.0, 10.0);
+        
+        
+        glEnd();
+        
+        
+        
+        
     }
     
-    glTexCoord2f(0.0, 0.0);
-    glVertex2f(-10.0, -10.0);
-    
-    glTexCoord2f(0.0, 1.0);
-    glVertex2f(-10.0, 10.0);
-    
-    glTexCoord2f(1.0, 1.0);
-    glVertex2f(10.0, 10.0);
-    
-    glTexCoord2f(1.0, 0.0);
-    glVertex2f(10.0, -10.0);
-
-    if (!cursorTex)
-        glDisable(GL_TEXTURE_2D);
-    glEnd();
-    
     glPopMatrix();
-    
+    glEnable(GL_FOG);
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);

@@ -73,7 +73,11 @@ bool CTargaImage::Load(const char *filename)
 	FILE *pFile = fopen(filename, "rb");
 
 	if (!pFile)
+	{
+	        perror("Error opening file");
 		return false;
+		
+	}
 
 	tgaheader_t tgaHeader;
 
@@ -85,6 +89,7 @@ bool CTargaImage::Load(const char *filename)
 		 (tgaHeader.imageTypeCode != TGA_RGB_RLE) && (tgaHeader.imageTypeCode != TGA_GRAYSCALE_RLE)) ||
 		 tgaHeader.colorMapType != 0)
 	{
+	        perror("File header type was incorrect");
 		fclose(pFile);
 		return false;
 	}
@@ -99,6 +104,7 @@ bool CTargaImage::Load(const char *filename)
 	// we don't handle less than 24 bit
 	if (colorMode < 3)
 	{
+	        perror("Color mode was less than 24");
 		fclose(pFile);
 		return false;
 	}

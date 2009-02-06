@@ -19,6 +19,7 @@ public:
     
 private:
     void DrawCastle();
+    void DrawPillar();
     
     int m_w, m_h;
     

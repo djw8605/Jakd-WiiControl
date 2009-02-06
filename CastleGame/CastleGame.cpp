@@ -14,9 +14,9 @@ CastleGame::CastleGame()
 {
     pillarTex = 0;
     CTargaImage image;
-        if (!image.Load("Media/Stonetexture.tga"))
+        if (!image.Load("Media/StoneTexture.tga"))
         {
-            cerr << "Error opening Media/Stonetexture.tga" << endl;
+            cerr << "Error opening Media/StoneTexture.tga" << endl;
         }
         else
         {
@@ -39,6 +39,8 @@ CastleGame::CastleGame()
 
 CastleGame::~CastleGame()
 {
+    
+    glDeleteTextures(1, &pillarTex);
 }
 
 
@@ -57,7 +59,18 @@ void CastleGame::Init()
     
     glMatrixMode(GL_MODELVIEW);
     
-    _camera->SetCameraLocation(0.0, -30.0, 10.0, 0.0, 0.0, 0.0);
+    _camera->SetCameraLocation(0.0, -5.0, 103.0, 0.0, 1000.0, 0.0);
+    glEnable(GL_BLEND);
+    
+    
+    glEnable(GL_FOG);
+    float fogStart = 1000.0, fogEnd = 3000.0;
+    float fogColor[4] = { 1.0, 1.0, 1.0, 0.1 };
+    glFogf(GL_FOG_DENSITY, 0.002f);
+    glFogi(GL_FOG_MODE, GL_EXP);
+    glFogf(GL_FOG_START, fogStart);
+    glFogf(GL_FOG_END, fogEnd);
+    glFogfv(GL_FOG_COLOR, fogColor);
         
     
 }
@@ -97,6 +110,7 @@ void CastleGame::Reshape(int w, int h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(0, 0, (GLsizei) w, (GLsizei) h);
+    gluPerspective(FOV, (GLfloat) w/ (GLfloat) h, 0.1, 5000.0);
     m_w = w;
     m_h = h;
     
@@ -108,8 +122,19 @@ void CastleGame::Reshape(int w, int h)
 void CastleGame::DrawCastle()
 {
     
+    DrawPillar();
+    
+}
+
+void CastleGame::DrawPillar() 
+{
+    
+    
     /* Render the pillar */
     glPushMatrix();
+    
+    glTranslatef(0.0, 0.0, 100.0);
+    //glScalef(3.0, 3.0, 3.0);
     
     if (!pillarTex)
     {
@@ -125,7 +150,7 @@ void CastleGame::DrawCastle()
             glScalef(1.0, -1.0, 1.0);
 
         glBegin(GL_QUADS);
-        glColor4f(1.0, 0.0, 0.0, 1.0);
+        glColor4f(1.0, 1.0, 1.0, 0.0);
         
         /* For textures, the sides are sqrt(2) + sqrt(2) + 2 = 4.8284
          * Therefore:
