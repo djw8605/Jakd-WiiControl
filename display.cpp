@@ -9,6 +9,7 @@
 #include "AbstractScene/AbstractScene.h"
 #include "MainMenu/MainMenu.h"
 #include "FreeType/FreeType.h"
+#include "CastleGame/CastleGame.h"
 
 struct SceneNode {
     AbstractScene* scene;
@@ -27,7 +28,7 @@ void InitDisplay()
     
     
     /* Add all of the scenes here */
-    AddScene(new MainMenu());
+    AddScene(new CastleGame());
     
     /* Internal Intializers */
     currentScene = scenes;
@@ -70,6 +71,8 @@ void display()
     /* And now the normal OpenGL Cleanup stuff */
     glPopMatrix();
     glutSwapBuffers();
+    
+    usleep(100);
     
 }
 

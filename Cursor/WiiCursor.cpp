@@ -10,8 +10,9 @@ using namespace std;
 
 WiiCursor::WiiCursor()
 {
+    cursorTex = 0;
     CTargaImage image;
-    if (!image.Load("Media/crosshair.tga"))
+    if (!image.Load("/home/dweitzel/workspace/WiiControl/Media/crosshair.tga"))
     {
         cerr << "Error opening Media/crosshair.tga" << endl;
     }
@@ -67,8 +68,12 @@ void WiiCursor::Render()
     
     glTranslatef(cursorX, cursorY, 0.0);
     glColor4f(0.0, 0.0, 0.0, 0.0);
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, cursorTex);
+    
+    if (!cursorTex)
+    {
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, cursorTex);
+    }
     
     glTexCoord2f(0.0, 0.0);
     glVertex2f(-10.0, -10.0);
@@ -82,7 +87,8 @@ void WiiCursor::Render()
     glTexCoord2f(1.0, 0.0);
     glVertex2f(10.0, -10.0);
 
-    glDisable(GL_TEXTURE_2D);
+    if (!cursorTex)
+        glDisable(GL_TEXTURE_2D);
     glEnd();
     
     glPopMatrix();

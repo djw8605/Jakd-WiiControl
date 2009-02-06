@@ -1,6 +1,9 @@
 #ifndef CASTLEGAME_H_
 #define CASTLEGAME_H_
 
+#include <GL/glut.h>
+#include <GL/gl.h>
+
 #include "AbstractScene/AbstractScene.h"
 
 class CastleGame : public AbstractScene
@@ -17,7 +20,9 @@ public:
 private:
     void DrawCastle();
     
+    int m_w, m_h;
     
+    GLuint pillarTex;
 };
 
 #endif /*CASTLEGAME_H_*/

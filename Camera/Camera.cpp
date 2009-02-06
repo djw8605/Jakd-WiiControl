@@ -35,7 +35,7 @@ void Camera::positionCamera()
     
     gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
     
-    //std::cout << eyeX << ", " << eyeY << ", " << eyeZ << std::endl;
+    std::cout << eyeX << ", " << eyeY << ", " << eyeZ << std::endl;
     
     
     
@@ -109,12 +109,18 @@ void Camera::ProcessCoordinates(short dot1x, short dot1y, short dot2x, short dot
      * Nearly the same thing as eyeX, but take in account the mounted angle of the wiimote
      */
     eyeZ = .5f + (float)(movementScaling * sin(relativeVerticalAngle + cameraVerticalAngle) * eyeY);
-
-    eyeY += centerY;
     
-    eyeY *= -1;
+    eyeZ += confCenterZ;
 
-    eyeX += centerX;
+    //eyeY += centerY;
+    
+    eyeY *= -1.0;
+    eyeY += confCenterY;
+    
+    //eyeY *= -1;
+
+    //eyeX += centerX;
+    eyeX += confCenterX;
 
 
 
@@ -125,7 +131,12 @@ void Camera::ProcessCoordinates(short dot1x, short dot1y, short dot2x, short dot
 void Camera::SetCameraLocation(float X, float Y, float Z, float newCenterX, float newCenterY, float newCenterZ)
 {
     
-    
+    confCenterX = X;
+    confCenterY = Y;
+    confCenterZ = Z;
+    newCenterX = centerX;
+    newCenterY = centerY;
+    newCenterZ = centerZ;
     
     
 }

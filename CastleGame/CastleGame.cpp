@@ -1,9 +1,40 @@
 #include "CastleGame.h"
 #include <GL/glut.h>
+#include "TextureLoader/CTargaImage.h"
+#include "config.h"
+#include "Cursor/WiiCursor.h"
+#include "Camera/Camera.h"
+
+#include <iostream>
+
+using namespace std;
 
 
 CastleGame::CastleGame()
 {
+    pillarTex = 0;
+    CTargaImage image;
+        if (!image.Load("Media/Stonetexture.tga"))
+        {
+            cerr << "Error opening Media/Stonetexture.tga" << endl;
+        }
+        else
+        {
+
+            glEnable(GL_TEXTURE_2D);
+            glGenTextures(1, &pillarTex);
+
+            glBindTexture(GL_TEXTURE_2D, pillarTex);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+            gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, image.GetWidth(), image.GetHeight(),
+            GL_RGB, GL_UNSIGNED_BYTE, image.GetImage());
+
+            image.Release();
+
+        }
 }
 
 CastleGame::~CastleGame()
@@ -25,6 +56,8 @@ void CastleGame::Init()
     gluPerspective(FOV, (GLfloat) width/ (GLfloat) height, 40, 5000.0);
     
     glMatrixMode(GL_MODELVIEW);
+    
+    _camera->SetCameraLocation(0.0, -30.0, 10.0, 0.0, 0.0, 0.0);
         
     
 }
@@ -42,6 +75,7 @@ void CastleGame::DeInit()
 
 void CastleGame::Render()
 {
+    _camera->positionCamera();
     DrawCastle();
     _cursor->Render();
     
@@ -77,6 +111,11 @@ void CastleGame::DrawCastle()
     /* Render the pillar */
     glPushMatrix();
     
+    if (!pillarTex)
+    {
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, pillarTex);
+    }
     
     /* Draw both sides */
     for (int i = 0; i < 2; i++)
@@ -86,7 +125,7 @@ void CastleGame::DrawCastle()
             glScalef(1.0, -1.0, 1.0);
 
         glBegin(GL_QUADS);
-        
+        glColor4f(1.0, 0.0, 0.0, 1.0);
         
         /* For textures, the sides are sqrt(2) + sqrt(2) + 2 = 4.8284
          * Therefore:
@@ -138,7 +177,8 @@ void CastleGame::DrawCastle()
 
     }
     
-    
+    if (!pillarTex)
+        glDisable(GL_TEXTURE_2D);
     
     
     glPopMatrix();
