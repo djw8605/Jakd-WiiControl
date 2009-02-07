@@ -53,22 +53,24 @@ WiiCursor* WiiCursor::GetInstance()
 }
 
 
-void WiiCursor::Render()
+void WiiCursor::Render(int screenW, int screenH)
 {
 
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
-    //glLoadIdentity();
+    glLoadIdentity();
+    glViewport(0, 0, (GLsizei) screenW, (GLsizei) screenH);
     gluOrtho2D(0, 1024, 0, 768);
 
     glMatrixMode(GL_MODELVIEW);
     
     glPushMatrix();
+    glLoadIdentity();
     glDisable(GL_FOG);
     
     
     glTranslatef(cursorX, cursorY, 0.0);
-    cout << "cursorX, cursorY: " << cursorX << ", " << cursorY << endl;
+    //cout << "cursorX, cursorY: " << cursorX << ", " << cursorY << endl;
     
     /* If the cursor Texture is loaded and working */
     if (cursorTex != 0)

@@ -50,7 +50,7 @@ void MainMenu::Render()
 {
     DrawBackground();
     DrawMenu();
-    _cursor->Render();
+    _cursor->Render(m_w, m_h);
     
     
 }

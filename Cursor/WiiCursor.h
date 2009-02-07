@@ -13,7 +13,7 @@ public:
 	virtual ~WiiCursor();
 	static WiiCursor* GetInstance();
 	void ProcessCoordinates(short x1, short y1, short x2, short y2);
-	void Render();
+	void Render(int screenW, int screenH);
 	
 private:
     float cursorX;

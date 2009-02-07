@@ -90,7 +90,7 @@ void CastleGame::Render()
 {
     _camera->positionCamera();
     DrawCastle();
-    _cursor->Render();
+    _cursor->Render(m_w, m_h);
     
     
 }

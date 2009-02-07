@@ -182,18 +182,89 @@ void ProcessPlayerLocation()
 void ProcessCursorLocation()
 {
     
-    if(wiimotes[playerWiiIndex]->ir.dot[0].visible && wiimotes[playerWiiIndex]->ir.dot[1].visible)
+    
+    static short distanceBetweenX = 0;
+    static short distanceBetweenY = 0;
+    
+    if (wiimotes[playerWiiIndex]->ir.dot[0].visible
+            && wiimotes[playerWiiIndex]->ir.dot[1].visible)
+    {
+        short dot1x = wiimotes[playerWiiIndex]->ir.dot[0].rx;
+        short dot1y = wiimotes[playerWiiIndex]->ir.dot[0].ry;
+        short dot2x = wiimotes[playerWiiIndex]->ir.dot[1].rx;
+        short dot2y = wiimotes[playerWiiIndex]->ir.dot[1].ry;
+        
+        distanceBetweenX = dot2x - dot1x;
+        distanceBetweenY = dot2y - dot1y;
+        
+        _cursor->ProcessCoordinates(dot1x, dot1y, dot2x, dot2y);
+
+    }
+    else
+    {
+        if (wiimotes[playerWiiIndex]->ir.num_dots == 1)
         {
-            short dot1x = wiimotes[playerWiiIndex]->ir.dot[0].rx;
-            short dot1y = wiimotes[playerWiiIndex]->ir.dot[0].ry;
-            short dot2x = wiimotes[playerWiiIndex]->ir.dot[1].rx;
-            short dot2y = wiimotes[playerWiiIndex]->ir.dot[1].ry;
+            short dot1x, dot1y; 
+            if (wiimotes[playerWiiIndex]->ir.dot[0].visible)
+            {
+                dot1x = wiimotes[playerWiiIndex]->ir.dot[0].rx;
+                dot1y = wiimotes[playerWiiIndex]->ir.dot[0].ry;
+            }
+            else if (wiimotes[playerWiiIndex]->ir.dot[1].visible)
+            {
+                dot1x = wiimotes[playerWiiIndex]->ir.dot[1].rx;
+                dot1y = wiimotes[playerWiiIndex]->ir.dot[1].ry;
+                
+            }
+            
+           
+            
+            short dot2x, dot2y;
+            
+            if (dot1x < 512)
+            {
+                
+                
+                
+                /* means dot2 was to the right, and we lost dot1 */
+                if (distanceBetweenX > 0) {
+                    dot2x = dot1x  - distanceBetweenX;
+                    dot2y = dot1y  - distanceBetweenY;
+                } else {
+                    
+                
+                    dot2x = dot1x + distanceBetweenX;
+                
+                    dot2y = dot1y + distanceBetweenY;
+                }
+            }
+            else
+            {
+                
+                
+                /* Means dot2 was to the right, we lost dot2 */
+                if (distanceBetweenX > 0)
+                {
+                    //printf("minusing");
+                    dot2x = dot1x  + distanceBetweenX;
+                    dot2y = dot1y  + distanceBetweenY;
+                } else {
+                  /* dot2 was to the left, lost dot1 */
+                dot2x = dot1x - distanceBetweenX;
+                dot2y = dot1y - distanceBetweenY;
+                }
+
+            }
 
             _cursor->ProcessCoordinates(dot1x, dot1y, dot2x, dot2y);
 
-        } else {
+        }
+        else
+        {
+            WiiMotesInstalled();
             return;
         }
+    }
     
     
 }
