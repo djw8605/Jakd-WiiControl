@@ -5,6 +5,7 @@ void StartWiiMotes();
 
 void ProcessWiiEvents();
 
+void WiiShutDown();
 
 
 #endif /*WIIINTERFACE_H_*/

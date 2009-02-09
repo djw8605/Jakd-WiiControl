@@ -20,10 +20,13 @@ public:
 private:
     void DrawCastle();
     void DrawPillar();
+    void DrawGround();
+    void DrawWall();
     
     int m_w, m_h;
     
-    GLuint pillarTex;
+    GLuint pillarTex, fieldTex;
+    GLuint groundList;
 };
 
 #endif /*CASTLEGAME_H_*/

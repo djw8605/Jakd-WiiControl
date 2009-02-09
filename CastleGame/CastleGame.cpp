@@ -14,9 +14,9 @@ CastleGame::CastleGame()
 {
     pillarTex = 0;
     CTargaImage image;
-        if (!image.Load("Media/StoneTexture.tga"))
+        if (!image.Load("Media/stone-texture.tga"))
         {
-            cerr << "Error opening Media/StoneTexture.tga" << endl;
+            cerr << "Error opening Media/stone-texture.tga" << endl;
         }
         else
         {
@@ -35,12 +35,61 @@ CastleGame::CastleGame()
             image.Release();
 
         }
+        if (!image.Load("Media/field.tga"))
+                {
+                    cerr << "Error opening Media/field.tga" << endl;
+                }
+                else
+                {
+
+                    glEnable(GL_TEXTURE_2D);
+                    glGenTextures(1, &fieldTex);
+
+                    glBindTexture(GL_TEXTURE_2D, fieldTex);
+
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+                    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, image.GetWidth(), image.GetHeight(),
+                    GL_RGB, GL_UNSIGNED_BYTE, image.GetImage());
+
+                    image.Release();
+
+                }
+        
+        
+        groundList = glGenLists(1);
+        glNewList(groundList, GL_COMPILE);
+        
+        glBegin(GL_QUADS);
+
+        for(int i = -1000; i < 1000; i+=200)
+        {
+            
+            glTexCoord2f(0.0, 0.0); glVertex3f((GLfloat)i, 0.0, 0.0);
+                glTexCoord2f(0.0, 1.0); glVertex3f((GLfloat)i, 2000.0, 0.0);
+                glTexCoord2f(1.0, 1.0); glVertex3f((GLfloat)i+200, 2000.0, 0.0);
+                glTexCoord2f(1.0, 0.0); glVertex3f((GLfloat)i+200, 0.0, 0.0);
+            
+            
+        }
+        
+        
+        
+
+        
+        glEnd();
+        
+        glEndList();
+        
 }
 
 CastleGame::~CastleGame()
 {
     
     glDeleteTextures(1, &pillarTex);
+    glDeleteTextures(1, &fieldTex);
+    glDeleteLists(groundList, 1);
 }
 
 
@@ -59,19 +108,34 @@ void CastleGame::Init()
     
     glMatrixMode(GL_MODELVIEW);
     
-    _camera->SetCameraLocation(0.0, -5.0, 103.0, 0.0, 1000.0, 0.0);
+    _camera->SetCameraLocation(0.0, -3.0, 53.0, 0.0, 1000.0, 0.0);
     glEnable(GL_BLEND);
     
     
     glEnable(GL_FOG);
     float fogStart = 1000.0, fogEnd = 3000.0;
-    float fogColor[4] = { 1.0, 1.0, 1.0, 0.1 };
+    float fogColor[4] = { 0.8, 0.8, 0.8, 0.1 };
     glFogf(GL_FOG_DENSITY, 0.002f);
     glFogi(GL_FOG_MODE, GL_EXP);
     glFogf(GL_FOG_START, fogStart);
     glFogf(GL_FOG_END, fogEnd);
     glFogfv(GL_FOG_COLOR, fogColor);
+    
+    GLfloat position[] = { 100.0, 100.0, 1000.0, 1.0 };
+    GLfloat ambient[] = { 0.5, 0.5, 0.5, 1.0 };
+      GLfloat diffuse[] = { 1, 1, 1, 1.0 };
         
+      glLightfv (GL_LIGHT0, GL_POSITION, position);
+        glLightfv (GL_LIGHT0, GL_DIFFUSE, diffuse);
+        glLightfv (GL_LIGHT0, GL_SPECULAR, diffuse);
+        glLightfv (GL_LIGHT0, GL_AMBIENT, ambient);
+        
+        glEnable(GL_LIGHTING);
+          glEnable(GL_LIGHT0);
+          
+          glEnable(GL_NORMALIZE);
+            glEnable(GL_AUTO_NORMAL);
+
     
 }
 
@@ -90,6 +154,7 @@ void CastleGame::Render()
 {
     _camera->positionCamera();
     DrawCastle();
+    DrawGround();
     _cursor->Render(m_w, m_h);
     
     
@@ -121,8 +186,23 @@ void CastleGame::Reshape(int w, int h)
 
 void CastleGame::DrawCastle()
 {
-    
+    glPushMatrix();
+    glPushMatrix();
+    glTranslatef(0.0, 0.0, 50.0);
     DrawPillar();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-10.0, 0.0, 50.0);
+    DrawPillar();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(10, 0.0, 50.0);
+    DrawPillar();
+    glPopMatrix();
+    glPopMatrix();
+    
+    
+    DrawWall();
     
 }
 
@@ -133,10 +213,18 @@ void CastleGame::DrawPillar()
     /* Render the pillar */
     glPushMatrix();
     
-    glTranslatef(0.0, 0.0, 100.0);
+    //glTranslatef(0.0, 0.0, 100.0);
     //glScalef(3.0, 3.0, 3.0);
     
-    if (!pillarTex)
+    GLfloat bodyamb[] = { .5, .5, .5, 1 };
+              GLfloat bodydif[] = { .8, .8, .8, 1 };
+              GLfloat bodyspec[] = { .8, .8, .8, 1 };
+              
+              glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, bodyamb);
+                glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, bodydif);
+                glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, bodyspec);
+    
+    if (pillarTex)
     {
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, pillarTex);
@@ -151,6 +239,8 @@ void CastleGame::DrawPillar()
 
         glBegin(GL_QUADS);
         glColor4f(1.0, 1.0, 1.0, 0.0);
+        
+        
         
         /* For textures, the sides are sqrt(2) + sqrt(2) + 2 = 4.8284
          * Therefore:
@@ -202,7 +292,7 @@ void CastleGame::DrawPillar()
 
     }
     
-    if (!pillarTex)
+    if (pillarTex)
         glDisable(GL_TEXTURE_2D);
     
     
@@ -211,6 +301,81 @@ void CastleGame::DrawPillar()
     
     
 }
+
+
+void CastleGame::DrawWall()
+{
+    
+    glPushMatrix();
+    
+    GLfloat bodyamb[] = { .6, .6, .6, 1 };
+              GLfloat bodydif[] = { .6, .6, .6, 1 };
+              GLfloat bodyspec[] = { .8, .8, .8, 1 };
+              
+              glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, bodyamb);
+                glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, bodydif);
+                glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, bodyspec);
+    
+    if (pillarTex)
+        {
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, pillarTex);
+        }
+    
+    glBegin(GL_QUADS);
+    
+    /* Top of the wall */
+    glTexCoord2f(0.0, 0.0); glVertex3f(-20, -20, 50);
+    glTexCoord2f(0.0, 0.7); glVertex3f(-20, 0, 50);
+    glTexCoord2f(1.0, 0.7); glVertex3f(20, 0,  50);
+    glTexCoord2f(1.0, 0.0); glVertex3f(20, -20, 50);
+    
+    
+    glEnd();
+    
+    if (pillarTex)
+           glDisable(GL_TEXTURE_2D);
+    
+    glPopMatrix();
+    
+}
+
+
+void CastleGame::DrawGround() 
+{
+
+    glPushMatrix();
+    
+    GLfloat bodyamb[] = { .6, .6, .6, 1 };
+              GLfloat bodydif[] = { .6, .6, .6, 1 };
+              GLfloat bodyspec[] = { .6, .6, .6, 1 };
+              
+              glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, bodyamb);
+                glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, bodydif);
+                glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, bodyspec);
+    
+    if (fieldTex)
+        {
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, fieldTex);
+        }
+    
+    glColor4f(1.0, 1.0, 1.0, 1.0);
+    
+        
+    glCallList(groundList);
+
+    
+    if (fieldTex)
+            glDisable(GL_TEXTURE_2D);
+    
+    
+    glPopMatrix();
+    
+}
+
+
+
 
 
 

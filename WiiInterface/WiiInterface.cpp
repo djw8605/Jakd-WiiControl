@@ -318,4 +318,13 @@ void ProcessWiiEvents()
 
 }
 
+void WiiShutDown() 
+{
+    
+    wiiuse_cleanup(wiimotes, MAX_WIIMOTES);
+    
+    
+}
+
+
 
