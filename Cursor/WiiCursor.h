@@ -14,6 +14,7 @@ public:
 	static WiiCursor* GetInstance();
 	void ProcessCoordinates(short x1, short y1, short x2, short y2);
 	void Render(int screenW, int screenH);
+	void GetCurrentCursor(int* buf);
 	
 private:
     float cursorX;

@@ -7,6 +7,7 @@
 #include "wiiuse.h"
 #include "Camera/Camera.h"
 #include "Cursor/WiiCursor.h"
+#include "display.h"
 
 #define MAX_WIIMOTES 2
 wiimote** wiimotes;
@@ -91,6 +92,7 @@ void StartWiiMotes()
 void handle_event(struct wiimote_t* wm, int index)
 {
     
+   
 	if (IS_PRESSED(wm, WIIMOTE_BUTTON_A)) {
 	    if (detecting == true)
 	    {
@@ -101,8 +103,23 @@ void handle_event(struct wiimote_t* wm, int index)
 	    
 	    
 	}
-    if (IS_PRESSED(wm, WIIMOTE_BUTTON_B))
-        printf("B pressed\n");
+    if (IS_PRESSED(wm, WIIMOTE_BUTTON_B)) {
+        
+        /* Don't care if we are currently looking for the players wiimote */
+        if(detecting == true)
+            return;
+        
+        if(index == playerWiiIndex) {
+
+            int points[2];
+            _cursor->GetCurrentCursor(points);
+            
+            GetDisplayed()->Select(points[0], points[1]);
+            
+        }
+    
+    }
+        
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_UP))
     {
         printf("UP pressed\n");

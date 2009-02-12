@@ -137,6 +137,21 @@ void WiiCursor::ProcessCoordinates(short x1, short y1, short x2, short y2)
 }
 
 
+void WiiCursor::GetCurrentCursor(int* buf) 
+{
+    
+    int width = glutGet(GLUT_WINDOW_WIDTH);
+    int height = glutGet(GLUT_WINDOW_WIDTH);
+    
+    /* Translate to the screen coordinates */
+    buf[0] = (int)(cursorX/1024.0)*width;
+    buf[1] = (int)(cursorY/768.0)*height;
+    
+    
+    
+}
+
+
 
 
 
