@@ -62,18 +62,18 @@ void display()
     intFrame++;
     if(frameCounter > 1.0)
     {
-    	printf("\b\b\b\b\b\b\b\b\b%i", intFrame);
+    	printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\bfps:%i", intFrame);
+    	fflush(stdout);
     	intFrame = 0;
+    	frameCounter = 0;
     }
 
     /* Process Events from wiimotes */
-    static float counter = 0.0;
-    counter += getTime();
-    if(counter > 0.1) {
-    	counter = 0;
+
+
+
     	ProcessWiiEvents();
 
-    }
 
 
     /* Generic OpenGL stuff */
@@ -94,7 +94,7 @@ void display()
     glPopMatrix();
     glutSwapBuffers();
 
-    usleep(100);
+    //usleep(10000);
 
 }
 
