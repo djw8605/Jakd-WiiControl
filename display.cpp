@@ -1,7 +1,11 @@
 #include <GL/glut.h>
 #include <sys/time.h>
 #include <unistd.h>
+
+#include <assert.h>
+
 #include <iostream>
+
 
 #include "display.h"
 #include "Camera/Camera.h"
@@ -25,56 +29,63 @@ void updateTime();
 void InitDisplay()
 {
     updateTime();
-    
-    
+
+
     /* Add all of the scenes here */
     AddScene(new CastleGame());
-    
+
     /* Internal Intializers */
     currentScene = scenes;
     currentScene->scene->Init();
-    
-    
+
+
 }
 
 
 void displayScene()
 {
-    
+
     currentScene->scene->Render();
-    
+
 }
 
 
 void display()
 {
-    
+
     /* Update the time for movement, and the like */
     updateTime();
-	
+
     /* Process Events from wiimotes */
-    ProcessWiiEvents();
-    
+    static float counter = 0.0;
+    counter += getTime();
+    if(counter > 0.1) {
+    	counter = 0;
+    	ProcessWiiEvents();
+
+    }
+
+
     /* Generic OpenGL stuff */
     glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     glPushMatrix();
-   
+
      /* Move Camera */
     /*camera->positionCamera(); */
-    
-	
+
+
     /* List everything to display to the screen here */
     displayScene();
-	
+
 
     /* And now the normal OpenGL Cleanup stuff */
     glPopMatrix();
     glutSwapBuffers();
-    
+
     usleep(100);
-    
+
 }
 
 
@@ -99,24 +110,58 @@ void AddScene(AbstractScene* toAdd)
         tmpNode->next->scene = toAdd;
         tmpNode->next->next = NULL;
     }
-    
-    
-    
-    
+
+
+
+
 }
 
 
-AbstractScene* GetDisplayed() 
+void NextScene()
+{
+	assert(scenes);
+	assert(currentScene);
+
+	/* Tell the scene that it is done */
+	currentScene->scene->DeInit();
+
+	currentScene = currentScene->next;
+
+	/* Tell the new scene to get ready */
+	currentScene->scene->Init();
+
+
+
+
+
+}
+
+
+void PrevScene()
+{
+
+	assert(scenes);
+
+	SceneNode* tmpScenes = scenes;
+
+
+
+
+}
+
+
+
+AbstractScene* GetDisplayed()
 {
     return currentScene->scene;
-    
-    
+
+
 }
 
 freetype::font_data* GetFont()
 {
     static freetype::font_data* font = NULL;
-    
+
     if (font == NULL)
     {
         try
@@ -130,11 +175,11 @@ freetype::font_data* GetFont()
         }
 
     }
-    
+
     return font;
-    
-    
-    
+
+
+
 }
 
 double storeTime = 0, lastTime = 0;
@@ -143,7 +188,7 @@ double getTime() {
 }
 
 void updateTime() {
-    
+
     lastTime = storeTime;
     timeval t;
     gettimeofday(&t, 0);
@@ -151,7 +196,7 @@ void updateTime() {
     storeTime = t.tv_sec;
     //store micoseconds of that second, so divide by million
     storeTime += ((double)t.tv_usec / 1000000);
-    
+
 }
 
 
