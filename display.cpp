@@ -56,6 +56,16 @@ void display()
     /* Update the time for movement, and the like */
     updateTime();
 
+    static float frameCounter = 0.0;
+    frameCounter += getTime();
+    static int intFrame = 0;
+    intFrame++;
+    if(frameCounter > 1.0)
+    {
+    	printf("\b\b\b\b\b\b\b\b\b%i", intFrame);
+    	intFrame = 0;
+    }
+
     /* Process Events from wiimotes */
     static float counter = 0.0;
     counter += getTime();
