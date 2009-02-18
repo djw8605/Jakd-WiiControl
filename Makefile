@@ -19,7 +19,7 @@ CXX = g++
 
 MAINMENU_SRC = MainMenu.cpp
 
-CASTLEGAME_SRC = CastleGame.cpp
+CASTLEGAME_SRC = CastleGame.cpp Enemy.cpp PlayerStats.cpp UI.cpp
 
 ABSTRACTSCENE_SRC = AbstractScene.cpp
 
