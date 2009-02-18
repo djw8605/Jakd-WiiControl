@@ -2,7 +2,7 @@
 #define PLAYERSTATS_H_
 
 
-#define _player PlayerStats::GetInstance();
+#define _player PlayerStats::GetInstance()
 #define MAX_PLAYER_HEALTH 100.0
 #define MAX_WALL_HEALTH 100.0
 

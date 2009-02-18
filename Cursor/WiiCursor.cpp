@@ -67,6 +67,7 @@ void WiiCursor::Render(int screenW, int screenH)
     glPushMatrix();
     glLoadIdentity();
     glDisable(GL_FOG);
+    //glDisable(GL_LIGHTING);
     
     
     glTranslatef(cursorX, cursorY, 0.0);
@@ -116,6 +117,7 @@ void WiiCursor::Render(int screenW, int screenH)
     }
     
     glPopMatrix();
+    //glEnable(GL_LIGHTING);
     glEnable(GL_FOG);
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
@@ -144,8 +146,8 @@ void WiiCursor::GetCurrentCursor(int* buf)
     int height = glutGet(GLUT_WINDOW_WIDTH);
     
     /* Translate to the screen coordinates */
-    buf[0] = (int)(cursorX/1024.0)*width;
-    buf[1] = (int)(cursorY/768.0)*height;
+    buf[0] = (int)((cursorX/1024.0)*(float)width);
+    buf[1] = (int)((cursorY/768.0)*(float)height);
     
     
     

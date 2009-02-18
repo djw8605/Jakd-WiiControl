@@ -4,6 +4,8 @@
 #include "config.h"
 #include "Cursor/WiiCursor.h"
 #include "Camera/Camera.h"
+#include "CastleGame/UI.h"
+#include "CastleGame/PlayerStats.h"
 
 #include <iostream>
 
@@ -156,6 +158,7 @@ void CastleGame::Render()
     DrawCastle();
     DrawGround();
     _cursor->Render(m_w, m_h);
+    _ui->Render();
     
     
 }
@@ -165,8 +168,14 @@ void CastleGame::Render()
 void CastleGame::Select(int x, int y)
 {
     
-    
-    
+    printf("Selected: %i, %i\n", x, y);
+    _player->AffectPlayerHealth(-10.0);
+    if(_player->GetPlayerHealth() <= 0)
+    {
+        /* Do something if the player's health is <= 0 */
+        
+    }
+    printf("New Health: %lf\n", _player->GetPlayerHealth());
 }
 
 

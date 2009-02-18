@@ -103,7 +103,7 @@ void handle_event(struct wiimote_t* wm, int index)
 	    
 	    
 	}
-    if (IS_PRESSED(wm, WIIMOTE_BUTTON_B)) {
+    if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_B)) {
         
         /* Don't care if we are currently looking for the players wiimote */
         if(detecting == true)
@@ -180,12 +180,18 @@ void ProcessPlayerLocation()
     /* Need at least 2 visible IR Dots */
     if(wiimotes[!playerWiiIndex]->ir.dot[0].visible && wiimotes[!playerWiiIndex]->ir.dot[1].visible)
     {
-        short dot1x = wiimotes[!playerWiiIndex]->ir.dot[0].rx;
-        short dot1y = wiimotes[!playerWiiIndex]->ir.dot[0].ry;
-        short dot2x = wiimotes[!playerWiiIndex]->ir.dot[1].rx;
-        short dot2y = wiimotes[!playerWiiIndex]->ir.dot[1].ry;
+        short dots[4];
+        dots[0] = wiimotes[!playerWiiIndex]->ir.dot[0].rx;
+        dots[1] = wiimotes[!playerWiiIndex]->ir.dot[0].ry;
+        dots[2] = wiimotes[!playerWiiIndex]->ir.dot[1].rx;
+        dots[3] = wiimotes[!playerWiiIndex]->ir.dot[1].ry;
+        
+        for(int i = 0; i < 4; i++) 
+        {
+            if (dots[i] == 0) dots[i] = 1;
+        }
 
-        _camera->ProcessCoordinates(dot1x, dot1y, dot2x, dot2y);
+        _camera->ProcessCoordinates(dots[0], dots[1], dots[2], dots[3]);
 
     } else {
         return;
