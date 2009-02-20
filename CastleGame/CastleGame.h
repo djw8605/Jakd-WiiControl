@@ -5,6 +5,7 @@
 #include <GL/gl.h>
 
 #include "AbstractScene/AbstractScene.h"
+#include "CastleGame/Enemy.h"
 
 class CastleGame : public AbstractScene
 {
@@ -27,6 +28,9 @@ private:
     
     GLuint pillarTex, fieldTex;
     GLuint groundList;
+    Enemy* m_enemies;
+    int m_numEnemies;
+    int m_picking;
 };
 
 #endif /*CASTLEGAME_H_*/

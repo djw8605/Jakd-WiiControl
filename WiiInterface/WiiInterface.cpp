@@ -135,7 +135,7 @@ void handle_event(struct wiimote_t* wm, int index)
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_MINUS))
         printf("MINUS pressed\n");
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_PLUS))
-        printf("PLUS pressed\n");
+        wiiuse_set_ir(wm, 1);
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_ONE))
         printf("ONE pressed\n");
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_TWO))

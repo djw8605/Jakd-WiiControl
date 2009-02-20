@@ -6,6 +6,8 @@
 #include "Camera/Camera.h"
 #include "CastleGame/UI.h"
 #include "CastleGame/PlayerStats.h"
+#include "CastleGame/Enemy.h"
+#include "display.h"
 
 #include <iostream>
 
@@ -75,14 +77,16 @@ CastleGame::CastleGame()
             
             
         }
-        
-        
-        
 
-        
         glEnd();
         
         glEndList();
+        
+        
+        m_enemies = new Enemy[10];
+        m_numEnemies = 10;
+        m_picking = 0;
+        
         
 }
 
@@ -155,10 +159,40 @@ void CastleGame::DeInit()
 void CastleGame::Render()
 {
     _camera->positionCamera();
+    
+    glPushName(1000);
     DrawCastle();
+    glPopName();
+    
+    glPushName(1001);
     DrawGround();
-    _cursor->Render(m_w, m_h);
-    _ui->Render();
+    glPopName();
+    
+    float timeDiff = getTime();
+    if (m_picking)
+        timeDiff = 0.0;
+    
+    for (int i = 0; i < m_numEnemies; i++)
+    {
+        glPushName(i);
+        m_enemies[i].Render(timeDiff);
+        glPopName();
+        
+        if(!m_picking)
+        {
+            if(m_enemies[i].GetY() < 0.0)
+            {
+                m_enemies[i].ReInit();
+            }
+            
+        }
+    }
+    
+    if(!m_picking) {
+        _cursor->Render(m_w, m_h);
+        _ui->Render();
+    }
+    
     
     
 }
@@ -167,14 +201,96 @@ void CastleGame::Render()
 
 void CastleGame::Select(int x, int y)
 {
-    
+    /* Now the wonders of opengl picking, ugh... */
     printf("Selected: %i, %i\n", x, y);
-    _player->AffectPlayerHealth(-10.0);
-    if(_player->GetPlayerHealth() <= 0)
+    m_picking = 1;
+
+    glPushMatrix();
+    GLuint buffer[512];
+    GLint viewport[4];
+
+    
+
+    glSelectBuffer(512, buffer);
+    glRenderMode(GL_SELECT);
+
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    glGetIntegerv(GL_VIEWPORT,viewport);
+    gluPickMatrix(x, y, (GLUT_WINDOW_WIDTH) / (float)glutGet(GLUT_WINDOW_HEIGHT), 40, 5000.0);
+    
+    
+    glMatrixMode(GL_MODELVIEW);
+    glInitNames();
+    glDisable(GL_LIGHTING);
+    glDisable(GL_FOG);
+    this->Render();
+    glEnable(GL_LIGHTING);
+    glEnable(GL_FOG);
+    
+    int hits = glRenderMode(GL_RENDER);
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
+    unsigned int min = buffer[1];
+    int i = 0;
+    int checked = 0;
+    int selected = 0;
+    
+    printf("Hits = %i\n", hits);
+    
+    if (hits)
+        selected = buffer[3];
+    else
+        selected = -1;
+    
+    
+    printf("hits = %i\n", hits);
+            printf("buffer0 = %i\n", buffer[0]);
+            printf("buffer1 = %i\n", buffer[1]);
+            printf("buffer2 = %i\n", buffer[2]);
+            printf("buffer3 = %i\n", buffer[3]);
+            printf("buffer4 = %i\n", buffer[4]);
+            printf("buffer5 = %i\n", buffer[5]);
+            printf("buffer6 = %i\n", buffer[6]);
+            printf("buffer6 = %i\n", buffer[7]);
+            printf("buffer6 = %i\n", buffer[8]);
+            printf("buffer6 = %i\n", buffer[9]);
+    
+    
+    while(checked < hits) {
+                    printf("Checking %i\n", buffer[i]);
+                    if(buffer[i] == 0) {
+                          printf("0 hits = %i\n", buffer[i]);
+                            checked++;
+                            i += 3;
+                            continue;
+                    }
+                    i++;
+                    if(min > buffer[i]) {
+                          printf("found min = %i, to %i\n", buffer[i], buffer[i+2]);
+                          fflush(stdout);
+                            min = buffer[i];
+                            i+=2;
+                            selected = buffer[i];
+                            i++;
+                            checked++;
+                    } else {
+                    i+=3;
+                    checked++;
+                    }
+            }
+    
+    if (selected != -1) 
     {
-        /* Do something if the player's health is <= 0 */
-        
+        printf("Selected enemy: %i\n", selected);
+        m_enemies[selected].ReInit();
     }
+        
+    
+    m_picking = 0;
     printf("New Health: %lf\n", _player->GetPlayerHealth());
 }
 

@@ -36,6 +36,7 @@ void UI::Render()
     glDisable(GL_FOG);
     glDisable(GL_LIGHTING);
     glEnable(GL_BLEND);
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     //glBlendFunc(GL_SRC_ALPHA,GL_ONE);
     
     this->RenderHealthBar();
@@ -59,7 +60,7 @@ void UI::RenderHealthBar()
     glPushMatrix();
         glLoadIdentity();
         /* Position Health Bar */
-        glTranslatef(100.0, 10.0, 0.0);
+        glTranslatef(50.0, 940.0, 0.0);
         glScalef(4.0, 2.0, 1.0);
         
         this->DrawBar(_player->GetPlayerPerc());
@@ -74,7 +75,7 @@ void UI::RenderWallHealth()
     glPushMatrix();
     glLoadIdentity();
     /* Position Health Bar */
-    glTranslatef(500.0, 10.0, 0.0);
+    glTranslatef(550.0, 940.0, 0.0);
     glScalef(4.0, 2.0, 1.0);
     
     this->DrawBar(_player->GetWallPerc());
@@ -109,7 +110,7 @@ void UI::DrawBar(float healthPerc)
     glEnd();
     
     /* Draw transparent inside of box */
-    glColor4f(1.0, 1.0, 1.0, 0.1);
+    glColor4f(1.0, 1.0, 1.0, 0.5);
     glBegin(GL_QUADS);
     glVertex3f(0.0, 0.0, 0.0);
     glVertex3f(0.0, boxDim[1], 0.0);

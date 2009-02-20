@@ -67,7 +67,7 @@ void WiiCursor::Render(int screenW, int screenH)
     glPushMatrix();
     glLoadIdentity();
     glDisable(GL_FOG);
-    //glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHTING);
     
     
     glTranslatef(cursorX, cursorY, 0.0);
@@ -115,9 +115,9 @@ void WiiCursor::Render(int screenW, int screenH)
         
         
     }
-    
+    glEnable(GL_LIGHTING);
     glPopMatrix();
-    //glEnable(GL_LIGHTING);
+   
     glEnable(GL_FOG);
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
