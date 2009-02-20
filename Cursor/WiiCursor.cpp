@@ -45,11 +45,11 @@ WiiCursor::~WiiCursor()
 
 WiiCursor* WiiCursor::GetInstance()
 {
-    
+
     static WiiCursor* cursor = new WiiCursor();
     return cursor;
-    
-    
+
+
 }
 
 
@@ -63,20 +63,20 @@ void WiiCursor::Render(int screenW, int screenH)
     gluOrtho2D(0, 1024, 0, 768);
 
     glMatrixMode(GL_MODELVIEW);
-    
+
     glPushMatrix();
     glLoadIdentity();
     glDisable(GL_FOG);
     glDisable(GL_LIGHTING);
-    
-    
+
+
     glTranslatef(cursorX, cursorY, 0.0);
     //cout << "cursorX, cursorY: " << cursorX << ", " << cursorY << endl;
-    
+
     /* If the cursor Texture is loaded and working */
     if (cursorTex != 0)
     {
-        
+
         glBegin(GL_QUADS);
         glColor4f(0.0, 0.0, 1.0, 1.0);
         glEnable(GL_TEXTURE_2D);
@@ -101,23 +101,23 @@ void WiiCursor::Render(int screenW, int screenH)
         /* If the texture isn't working */
         glColor4f(0.0, 0.0, 1.0, 0.8);
         glBegin(GL_LINES);
-        
+
         glVertex2f(-10.0, 0.0);
         glVertex2f(10.0, 0.0);
-        
+
         glVertex2f(0.0, -10.0);
         glVertex2f(0.0, 10.0);
-        
-        
+
+
         glEnd();
-        
-        
-        
-        
+
+
+
+
     }
     glEnable(GL_LIGHTING);
     glPopMatrix();
-   
+
     glEnable(GL_FOG);
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
@@ -128,29 +128,29 @@ void WiiCursor::Render(int screenW, int screenH)
 
 void WiiCursor::ProcessCoordinates(short x1, short y1, short x2, short y2)
 {
-    
+
     /* Do a bunch of calculations to find the on screen coordinates */
     cursorX = (x1+x2)/2;
     cursorY = 768-(y1+y2)/2;
-    
-    
-    
-    
+
+
+
+
 }
 
 
-void WiiCursor::GetCurrentCursor(int* buf) 
+void WiiCursor::GetCurrentCursor(int* buf)
 {
-    
+
     int width = glutGet(GLUT_WINDOW_WIDTH);
-    int height = glutGet(GLUT_WINDOW_WIDTH);
-    
+    int height = glutGet(GLUT_WINDOW_HEIGHT);
+
     /* Translate to the screen coordinates */
     buf[0] = (int)((cursorX/1024.0)*(float)width);
     buf[1] = (int)((cursorY/768.0)*(float)height);
-    
-    
-    
+
+
+
 }
 
 

@@ -14,6 +14,7 @@
 #include "MainMenu/MainMenu.h"
 #include "FreeType/FreeType.h"
 #include "CastleGame/CastleGame.h"
+#include "config.h"
 
 struct SceneNode {
     AbstractScene* scene;
@@ -71,7 +72,7 @@ void display()
     /* Process Events from wiimotes */
 
 
-
+    if(useWiiMotes)
     	ProcessWiiEvents();
 
 

@@ -5,32 +5,35 @@
 #include "events.h"
 #include "init.h"
 #include "WiiInterface/WiiInterface.h"
+#include "config.h"
 #include <unistd.h>
+
+int useWiiMotes;
 
 
 int main(int argc, char *argv[])
 {
-	int useWiiMotes = 1;
+	useWiiMotes = 1;
 	/* Process Arguments */
-	
+
 	int option_char;
-	
-	while((option_char = getopt(argc, argv, "n")) != -1) 
+
+	while((option_char = getopt(argc, argv, "n")) != -1)
 	{
 	    switch (option_char)
 	    {
 	    case 'n': useWiiMotes = 0; break;
-	    
+
 	    }
-	    
-	    
-	    
+
+
+
 	}
-    
+
     /* Connect Wii Motes */
 	if(useWiiMotes)
             StartWiiMotes();
-	
+
 	/* Setup Window */
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -44,19 +47,19 @@ int main(int argc, char *argv[])
 	glutKeyboardFunc(keyboard);
 	glutSpecialFunc(specialKeyboard);
 	glutIdleFunc(display);
-	
+
 	/* Intialize everything */
 	init();
-	
 
-	
+
+
 	/* Enter Game Loop */
-	
+
 	glutMainLoop();
-	
+
 	WiiShutDown();
-	
-	
-	
+
+
+
 }
 
