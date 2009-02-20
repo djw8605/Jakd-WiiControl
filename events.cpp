@@ -35,12 +35,12 @@ void mouse(int button, int state, int x, int y)
     int width = glutGet(GLUT_WINDOW_WIDTH);
     int height = glutGet(GLUT_WINDOW_HEIGHT);
 
-    printf("Width = %i, H = %i\n", width, height);
+    //printf("Width = %i, H = %i\n", width, height);
 
     int cursorX = ((float)x/(float)width)*1024.0;
     int cursorY = ((float)y/(float)height)*768.0;
 
-    printf("Inside mouse: (%i, %i)\n", cursorX, cursorY);
+    //printf("Inside mouse: (%i, %i)\n", cursorX, cursorY);
 	_cursor->ProcessCoordinates(cursorX, cursorY, cursorX, cursorY);
 
 	int points[2];

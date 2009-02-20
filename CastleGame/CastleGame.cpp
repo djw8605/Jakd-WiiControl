@@ -143,6 +143,9 @@ void CastleGame::Init()
             glEnable(GL_AUTO_NORMAL);
 
 
+            glEnable(GL_BLEND);
+            glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 }
 
 
@@ -202,7 +205,7 @@ void CastleGame::Render()
 void CastleGame::Select(int x, int y)
 {
     /* Now the wonders of opengl picking, ugh... */
-    printf("Selected: %i, %i\n", x, y);
+    //printf("Selected: %i, %i\n", x, y);
     m_picking = 1;
 
     glPushMatrix();
@@ -241,7 +244,7 @@ void CastleGame::Select(int x, int y)
     int checked = 0;
     int selected = 0;
 
-    printf("Hits = %i\n", hits);
+   // printf("Hits = %i\n", hits);
 
     if (hits)
         selected = buffer[3];
@@ -249,7 +252,7 @@ void CastleGame::Select(int x, int y)
         selected = -1;
 
 
-    printf("hits = %i\n", hits);
+/*    printf("hits = %i\n", hits);
             printf("buffer0 = %u\n", buffer[0]);
             printf("buffer1 = %u\n", buffer[1]);
             printf("buffer2 = %u\n", buffer[2]);
@@ -260,20 +263,20 @@ void CastleGame::Select(int x, int y)
             printf("buffer6 = %u\n", buffer[7]);
             printf("buffer6 = %u\n", buffer[8]);
             printf("buffer6 = %u\n", buffer[9]);
-
+*/
 
     while(checked < hits) {
-                    printf("Checking %i\n", buffer[i]);
+                    //printf("Checking %i\n", buffer[i]);
                     if(buffer[i] == 0) {
-                          printf("0 hits = %i\n", buffer[i]);
+                          //printf("0 hits = %i\n", buffer[i]);
                             checked++;
                             i += 3;
                             continue;
                     }
                     i++;
                     if(min > buffer[i]) {
-                          printf("found min = %i, to %i\n", buffer[i], buffer[i+2]);
-                          fflush(stdout);
+                          //printf("found min = %i, to %i\n", buffer[i], buffer[i+2]);
+                          //fflush(stdout);
                             min = buffer[i];
                             i+=2;
                             selected = buffer[i];
@@ -287,13 +290,13 @@ void CastleGame::Select(int x, int y)
 
     if (selected != -1)
     {
-        printf("Selected enemy: %i\n", selected);
+        //printf("Selected enemy: %i\n", selected);
         m_enemies[selected].ReInit();
     }
 
 
     m_picking = 0;
-    printf("New Health: %lf\n", _player->GetPlayerHealth());
+    //printf("New Health: %lf\n", _player->GetPlayerHealth());
 }
 
 
