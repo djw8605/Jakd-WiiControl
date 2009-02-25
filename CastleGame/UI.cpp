@@ -3,6 +3,7 @@
 #include "CastleGame/PlayerStats.h"
 #include <stdio.h>
 #include <math.h>
+#include "TextPrinter/BitMapText.h"
 
 
 #define PERCENT_HEALTH 0.97
@@ -120,7 +121,7 @@ void UI::DrawBar(float healthPerc)
 
     /* Draw actual Health */
 
-    glColor4f(1.0-healthPerc, healthPerc, 0.0, 1.0);
+    glColor4f(1.0-healthPerc, healthPerc, 0.0, 0.75);
     glTranslatef(innerDim[0], innerDim[1], 0.0);
     glScalef(healthPerc, 1.0, 1.0);
     glBegin(GL_QUADS);
@@ -129,6 +130,7 @@ void UI::DrawBar(float healthPerc)
     glVertex3f(innerDim[2], innerDim[3], 0.1);
     glVertex3f(0.0, innerDim[3], 0.1);
     glEnd();
+    
 
 
 

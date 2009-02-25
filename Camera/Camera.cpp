@@ -3,6 +3,8 @@
 #include <GL/glu.h>
 #include <math.h>
 #include <iostream>
+#include <math.h>
+#include "display.h"
 
 #define PI 3.14159265
 
@@ -12,6 +14,7 @@ Camera::Camera()
     eyeY = -30.0;
     eyeZ = 10.0;
     centerX = 0.0; centerY = 0.0; centerZ = 0.0; upX = 0.0; upY = 0.0; upZ = 1.0;
+    shakeCounter = 100000.0;
 }
 
 Camera::~Camera()
@@ -32,8 +35,17 @@ Camera* Camera::GetInstance()
 void Camera::positionCamera()
 {
 
+    float tmpEyeX= 0.0;
+    if(shakeCounter < 1.5)
+    {
+        tmpEyeX = (1*sin(shakeCounter*20))/(pow(shakeCounter*20, 1.3))+eyeX;
+        shakeCounter += getTime();
+    }
+    else
+        tmpEyeX = eyeX;
     
-    gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, 0.0, 0.0, 1.0);
+    gluLookAt(tmpEyeX, eyeY, eyeZ, centerX, centerY, centerZ, 0.0, 0.0, 1.0);
+
     
     //std::cout << eyeX << ", " << eyeY << ", " << eyeZ << std::endl;
     
@@ -140,6 +152,18 @@ void Camera::SetCameraLocation(float X, float Y, float Z, float newCenterX, floa
     
     
 }
+
+void Camera::ShakeCamera(float intensity)
+{
+    
+    if (intensity <= 0.0)
+        return;
+    
+    shakeCounter = 0.0;
+    
+    
+}
+
 
 
 

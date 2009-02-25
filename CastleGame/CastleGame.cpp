@@ -8,6 +8,7 @@
 #include "CastleGame/PlayerStats.h"
 #include "CastleGame/Enemy.h"
 #include "display.h"
+#include "TextPrinter/BitMapText.h"
 
 #include <iostream>
 
@@ -501,6 +502,9 @@ void CastleGame::DrawGround()
 
 
     glPopMatrix();
+    
+    
+
 
 }
 

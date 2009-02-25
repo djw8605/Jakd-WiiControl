@@ -3,6 +3,7 @@
 #include "display.h"
 #include <ctime>
 #include <cstdlib>
+#include "TextPrinter/BitMapText.h"
 
 
 void init()
@@ -12,7 +13,7 @@ void init()
     srand(time(0));
     InitDisplay();
     
- 
+    BuildFont();
 	
 	
 }

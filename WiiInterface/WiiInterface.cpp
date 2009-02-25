@@ -120,6 +120,11 @@ void handle_event(struct wiimote_t* wm, int index)
     
     }
         
+    if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_PLUS)) {
+    //    _camera->ShakeCamera(10.0);
+        
+        
+    }
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_UP))
     {
         printf("UP pressed\n");

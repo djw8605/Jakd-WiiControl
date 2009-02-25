@@ -10,7 +10,7 @@ WIIUSE_LIB = $(WIIUSE_DIR)/libwiiuse.so
 
 INCLUDES = -Iwiiuse/src/ -I.
 
-CPPFLAGS = -Wall -g -fPIC -funroll-loops $(INCLUDES) $(FREETYPE_CFLAGS) $(LIB3DS_CFLAGS)
+CPPFLAGS =  -Wall -g -fPIC -funroll-loops $(INCLUDES) $(FREETYPE_CFLAGS) $(LIB3DS_CFLAGS)
 CXXFLAGS = 
 LIBS = -lglut -lm -lGL -lGLU -lwiiuse $(FREETYPE_LIBS) $(LIB3DS_LIBS)
 LDFLAGS = -L$(WIIUSE_DIR)
@@ -20,6 +20,8 @@ CXX = g++
 MAINMENU_SRC = MainMenu.cpp
 
 CASTLEGAME_SRC = CastleGame.cpp Enemy.cpp PlayerStats.cpp UI.cpp
+
+TEXTPRINTER_SRC = BitMapText.cpp
 
 ABSTRACTSCENE_SRC = AbstractScene.cpp
 
@@ -40,13 +42,14 @@ MAIN_SRC = main.cpp events.cpp display.cpp init.cpp
 SOURCES = $(MAIN_SRC) $(CAMERA_SRC:%=Camera/%) $(WIIINTERFACE_SRC:%=WiiInterface/%) $(MAINMENU_SRC:%=MainMenu/%) \
 	$(ABSTRACTSCENE_SRC:%=AbstractScene/%) $(FREETYPE_SRC:%=FreeType/%) $(MODELLOADER_SRC:%=ModelLoader/%) \
 	$(WIICURSOR_SRC:%=Cursor/%) $(CTARGAIMAGE_SRC:%=TextureLoader/%) \
-	$(CASTLEGAME_SRC:%=CastleGame/%)
+	$(CASTLEGAME_SRC:%=CastleGame/%) $(TEXTPRINTER_SRC:%=TextPrinter/%)
 OBJS = $(MAIN_SRC:%.cpp=%.o) $(CAMERA_SRC:%.cpp=Camera/%.o) \
 	$(WIIINTERFACE_SRC:%.cpp=WiiInterface/%.o) $(MAINMENU_SRC:%.cpp=MainMenu/%.o) \
 	$(ABSTRACTSCENE_SRC:%.cpp=AbstractScene/%.o) $(FREETYPE_SRC:%.cpp=FreeType/%.o) \
 	$(MODELLOADER_SRC:%.cpp=ModelLoader/%.o) $(WIICURSOR_SRC:%.cpp=Cursor/%.o) \
 	$(CTARGAIMAGE_SRC:%.cpp=TextureLoader/%.o) \
-	$(CASTLEGAME_SRC:%.cpp=CastleGame/%.o)
+	$(CASTLEGAME_SRC:%.cpp=CastleGame/%.o) \
+	$(TEXTPRINTER_SRC:%.cpp=TextPrinter/%.o)
 	
 
 all: wiicontrol
