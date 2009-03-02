@@ -23,12 +23,24 @@ public:
 	float GetWallPerc();
 	float AffectWallHealth(float amount);
 	
+	/* Level constant stuff */
+	int GetLevel();
+	void IncrementLevel();
+	
+	/* Enemy Stats */
+	int GetEnemiesKilled();
+	int GetEnemiesNotKilled();
+	void IncrementEnemiesKilled();
+	void IncrementEnemiesNotKilled();
 	
 	
 	
 private:
     float m_playerHealth;
     float m_wallHealth;
+    int m_level;
+    int m_enemiesKilled;
+    int m_enemiesNotKilled;
 };
 
 #endif /*PLAYERSTATS_H_*/

@@ -187,6 +187,10 @@ void CastleGame::Render()
             if(m_enemies[i].GetY() < 0.0)
             {
                 m_enemies[i].ReInit();
+                
+                /* Take health away from the player */
+                _player->AffectWallHealth(-10.0);
+                _player->IncrementEnemiesNotKilled();
             }
 
         }
@@ -293,6 +297,7 @@ void CastleGame::Select(int x, int y)
     {
         //printf("Selected enemy: %i\n", selected);
         m_enemies[selected].ReInit();
+        _player->IncrementEnemiesKilled();
     }
 
 

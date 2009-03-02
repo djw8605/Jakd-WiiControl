@@ -4,6 +4,9 @@ PlayerStats::PlayerStats()
 {
     m_playerHealth = MAX_PLAYER_HEALTH;
     m_wallHealth = MAX_WALL_HEALTH;
+    m_level = 1;
+    m_enemiesKilled = 0;
+    m_enemiesNotKilled = 0;
 }
 
 PlayerStats::~PlayerStats()
@@ -80,4 +83,41 @@ float PlayerStats::AffectWallHealth(float amount)
     
     return this->GetWallHealth();
 }
+
+
+
+int PlayerStats::GetLevel()
+{
+    return m_level;
+}
+
+
+void PlayerStats::IncrementLevel()
+{
+    m_level++;
+}
+
+int PlayerStats::GetEnemiesKilled()
+{
+    return m_enemiesKilled;
+    
+}
+int PlayerStats::GetEnemiesNotKilled()
+{
+    return m_enemiesNotKilled;
+    
+}
+void PlayerStats::IncrementEnemiesKilled()
+{
+    m_enemiesKilled++;
+    
+}
+void PlayerStats::IncrementEnemiesNotKilled()
+{
+    m_enemiesNotKilled++;
+    
+}
+
+
+
 

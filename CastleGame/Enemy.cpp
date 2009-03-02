@@ -2,7 +2,7 @@
 #include <GL/glut.h>
 #include "Enemy.h"
 #include <cstdio>
-
+#include "CastleGame/PlayerStats.h"
 
 Enemy::Enemy()
 {
@@ -24,7 +24,7 @@ void Enemy::Render(float timeDiff)
                   
 
     
-    m_y -= timeDiff*ENEMY_SPEED;
+    m_y -= timeDiff * ENEMY_SPEED * LevelSpeed[_player->GetLevel()-1];
 
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, bodyamb);
       glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, bodydif);
