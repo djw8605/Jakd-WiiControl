@@ -5,7 +5,7 @@
 #define ENEMY_SPEED 50.0                                 /* Larger = faster */
 #define ENEMY_STARTING_Y 2000.0                /* Starting y position, how far away from the castle */
 
-static const float LevelSpeed []  = { 1.0, 1.25, 1.50, 1.75 };
+static const float LevelSpeed []  = { 1.0, 1.25, 1.50, 1.75, 2.0 };
 
 
 class Enemy

@@ -16,6 +16,7 @@ private:
     void RenderWallHealth();
     void DrawBar(float healthPerc, char* inside);
     void RenderLevelInfo();
+    void RenderKilledInfo();
 };
 
 

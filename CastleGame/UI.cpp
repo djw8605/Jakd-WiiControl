@@ -45,6 +45,8 @@ void UI::Render()
     this->RenderWallHealth();
     
     this->RenderLevelInfo();
+    
+    this->RenderKilledInfo();
 
     glEnable(GL_LIGHTING);
     glEnable(GL_FOG);
@@ -164,6 +166,18 @@ void UI::RenderLevelInfo()
     
     
 }
+
+
+void UI::RenderKilledInfo()
+{
+    
+    glPushMatrix();
+    glTranslatef(0.0, 0.0, 0.0);
+    freetype::print(*(GetFont()), 10, 10, (char*) "Killed: %i", _player->GetEnemiesKilled());
+    glPopMatrix();
+    
+}
+
 
 
 

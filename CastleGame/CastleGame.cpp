@@ -298,6 +298,10 @@ void CastleGame::Select(int x, int y)
         //printf("Selected enemy: %i\n", selected);
         m_enemies[selected].ReInit();
         _player->IncrementEnemiesKilled();
+        if((_player->GetEnemiesKilled() > 0) && ((_player->GetEnemiesKilled() % 20) == 0))
+        {
+            _player->IncrementLevel();
+        }
     }
 
 
