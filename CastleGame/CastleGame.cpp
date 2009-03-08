@@ -9,6 +9,7 @@
 #include "CastleGame/Enemy.h"
 #include "display.h"
 #include "TextPrinter/BitMapText.h"
+#include "CastleGame/Catapult.h"
 
 #include <iostream>
 
@@ -171,6 +172,8 @@ void CastleGame::Render()
     //glPushName(1001);
     DrawGround();
     //glPopName();
+    
+    _catapult->Render();
 
     float timeDiff = getTime();
     if (m_picking)
@@ -195,6 +198,7 @@ void CastleGame::Render()
 
         }
     }
+
 
     if(!m_picking) {
         _cursor->Render(m_w, m_h);
@@ -244,20 +248,22 @@ void CastleGame::Select(int x, int y)
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
-    unsigned int min = buffer[1];
+    unsigned int min = 0xFFFFFFFF;
     int i = 0;
     int checked = 0;
     int selected = 0;
 
    // printf("Hits = %i\n", hits);
 
-    if (hits)
-        selected = buffer[3];
-    else
-        selected = -1;
+  //  if (hits)
+    //    selected = buffer[3];
+    //else
+     //   selected = -1;
+    
+    selected = -1;
 
 
-/*    printf("hits = %i\n", hits);
+  /*  printf("hits = %i\n", hits);
             printf("buffer0 = %u\n", buffer[0]);
             printf("buffer1 = %u\n", buffer[1]);
             printf("buffer2 = %u\n", buffer[2]);
@@ -279,6 +285,7 @@ void CastleGame::Select(int x, int y)
                             continue;
                     }
                     i++;
+                    //printf("Comparing %i and %i", min, buffer[i]);
                     if(min > buffer[i]) {
                           //printf("found min = %i, to %i\n", buffer[i], buffer[i+2]);
                           //fflush(stdout);
@@ -296,6 +303,7 @@ void CastleGame::Select(int x, int y)
     if (selected != -1)
     {
         //printf("Selected enemy: %i\n", selected);
+        
         m_enemies[selected].ReInit();
         _player->IncrementEnemiesKilled();
         if((_player->GetEnemiesKilled() > 0) && ((_player->GetEnemiesKilled() % 20) == 0))
