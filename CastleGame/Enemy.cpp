@@ -7,10 +7,14 @@
 Enemy::Enemy()
 {
     this->ReInit();
+    
+    m_model = _player->GetEnemyModel();
+
 }
 
 Enemy::~Enemy()
 {
+    delete m_model;
 }
 
 void Enemy::Render(float timeDiff)
@@ -33,13 +37,19 @@ void Enemy::Render(float timeDiff)
     glTranslatef(m_x, m_y, 0.0);
     glColor4f(1.0, 0.0, 0.0, 1.0);
     
+    printf("Drawing: %p\n", m_model);
+    //m_model->Draw();
+    printf("done drawing\n");
+    
+    
+    /*
     glBegin(GL_QUADS);
     glVertex3f(-5.0, 0.0, 0.0);
     glVertex3f(-5.0, 0.0, 10.0);
     glVertex3f(5.0, 0.0, 10.0);
     glVertex3f(5.0, 0.0, 0.0);
     glEnd();
-    
+    */
     
     
     glPopMatrix();

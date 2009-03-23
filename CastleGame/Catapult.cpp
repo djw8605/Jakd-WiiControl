@@ -2,16 +2,22 @@
 #include "display.h"
 #include <GL/glut.h>
 #include <cmath>
+#include "Camera/Camera.h"
+#include "CastleGame/PlayerStats.h"
 
 #define CATAPULT_SPEED 200.0
 #define SPHERE_SIZE 7.0
 #define eqn(x) 70*cos((x-375)/500)
+#define CATAPULT_START 3000.0
+
+float CatapultOften[] = { 10.0, 8.0, 7.0, 6.0 };
 
 Catapult::Catapult()
 {
     pos[0] = 0.0;
-    pos[1] = 3000.0;
+    pos[1] = CATAPULT_START;
     pos[2] = 0.0;
+    counter = 0.0;
 }
 
 Catapult::~Catapult()
@@ -27,6 +33,29 @@ Catapult* Catapult::GetInstance()
 
 void Catapult::Render()
 {
+    
+    /* Check if we should even render the catapult */
+    counter -= getTime();
+    if(counter > 0)
+        return;
+    
+    /* Ok, check if it's hitting the wall now */
+    //printf("%lf\n", pos[1]);
+    if(pos[1] <= 0.0)
+    {
+        float camPos[3];
+        _camera->GetPosition(camPos);
+        _camera->ShakeCamera(1.0);
+
+        if(camPos[0] <= 0)
+        {
+            _player->AffectPlayerHealth(-10.0);
+        }
+        
+        counter = CatapultOften[_player->GetLevel()];
+        pos[1] = CATAPULT_START;
+        
+    }
     
     GLfloat bodyamb[] = { 0.2, 0.2, 0.2, 1.0 };
        GLfloat bodydif[] = { 0.2, 0.2, 0.2, 1.0 };

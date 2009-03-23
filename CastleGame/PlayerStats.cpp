@@ -7,6 +7,11 @@ PlayerStats::PlayerStats()
     m_level = 1;
     m_enemiesKilled = 0;
     m_enemiesNotKilled = 0;
+    
+
+   m_EnemyModel = new CModel3DS("snowman.3ds");
+   m_EnemyModel->CreateVBO();
+
 }
 
 PlayerStats::~PlayerStats()
@@ -116,6 +121,12 @@ void PlayerStats::IncrementEnemiesNotKilled()
 {
     m_enemiesNotKilled++;
     
+}
+
+CModel3DS* PlayerStats::GetEnemyModel()
+{
+    
+    return m_EnemyModel;
 }
 
 

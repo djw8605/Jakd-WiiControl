@@ -1,6 +1,8 @@
 #ifndef PLAYERSTATS_H_
 #define PLAYERSTATS_H_
 
+#include "ModelLoader/CModel3DS.h"
+
 
 #define _player PlayerStats::GetInstance()
 #define MAX_PLAYER_HEALTH 100.0
@@ -33,6 +35,9 @@ public:
 	void IncrementEnemiesKilled();
 	void IncrementEnemiesNotKilled();
 	
+	/* Models */
+	CModel3DS* GetEnemyModel();
+	
 	
 	
 private:
@@ -41,6 +46,7 @@ private:
     int m_level;
     int m_enemiesKilled;
     int m_enemiesNotKilled;
+    CModel3DS* m_EnemyModel;
 };
 
 #endif /*PLAYERSTATS_H_*/

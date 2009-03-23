@@ -13,7 +13,7 @@ void init()
     srand(time(0));
     InitDisplay();
     
-    BuildFont();
+    //BuildFont();
 	
 	
 }

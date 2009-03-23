@@ -14,6 +14,7 @@ public:
 	
 private:
     float pos[3];
+    float counter;
     
     
 };
