@@ -173,7 +173,6 @@ void CastleGame::Render()
     DrawGround();
     //glPopName();
     
-    
     _catapult->Render();
 
     float timeDiff = getTime();

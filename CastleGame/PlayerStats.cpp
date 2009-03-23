@@ -9,7 +9,7 @@ PlayerStats::PlayerStats()
     m_enemiesNotKilled = 0;
     
 
-   m_EnemyModel = new CModel3DS("snowman.3ds");
+   m_EnemyModel = new CModel3DS("Media/SoldierArmor.3DS");
    m_EnemyModel->CreateVBO();
 
 }

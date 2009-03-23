@@ -35,11 +35,13 @@ void Enemy::Render(float timeDiff)
       glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, bodyspec);
     //glLoadIdentity();
     glTranslatef(m_x, m_y, 0.0);
+    //glRotatef(90, 1.0, 0.0, 0.0);
+    glScalef(0.03, 0.03, 0.03);
     glColor4f(1.0, 0.0, 0.0, 1.0);
     
-    printf("Drawing: %p\n", m_model);
-    //m_model->Draw();
-    printf("done drawing\n");
+    //printf("pos = %lf\n", m_y);
+    m_model->Draw();
+
     
     
     /*
