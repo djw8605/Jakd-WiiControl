@@ -402,20 +402,20 @@ void CastleGame::DrawPillar()
          *
          */
         /* The three sides */
-        glTexCoord2f(0.0, 0.0); glVertex3f(0.0, 0.0, 0.0);
-        glTexCoord2f(0.0, 0.7795); glVertex3f(0.0, 0.0, 5.0);
-        glTexCoord2f(0.29289, 0.7795); glVertex3f(1.0, -1.0, 5.0);
-        glTexCoord2f(0.29289, 0.0); glVertex3f(1.0, -1.0, 0.0);
+        glNormal3f(-1.0, -1.0, 0.0); glTexCoord2f(0.0, 0.0); glVertex3f(0.0, 0.0, 0.0);
+        glNormal3f(-1.0, -1.0, 0.0); glTexCoord2f(0.0, 0.7795); glVertex3f(0.0, 0.0, 5.0);
+        glNormal3f(-1.0, -1.0, 0.0); glTexCoord2f(0.29289, 0.7795); glVertex3f(1.0, -1.0, 5.0);
+        glNormal3f(-1.0, -1.0, 0.0); glTexCoord2f(0.29289, 0.0); glVertex3f(1.0, -1.0, 0.0);
 
-        glTexCoord2f(0.29289, 0.0); glVertex3f(1.0, -1.0, 0.0);
-        glTexCoord2f(0.29289, 0.7795); glVertex3f(1.0, -1.0, 5.0);
-        glTexCoord2f(0.70710, 0.7795); glVertex3f(3.0, -1.0, 5.0);
-        glTexCoord2f(0.70710, 0.0); glVertex3f(3.0, -1.0, 0.0);
+        glNormal3f(0.0, -1.0, 0.0); glTexCoord2f(0.29289, 0.0); glVertex3f(1.0, -1.0, 0.0);
+        glNormal3f(0.0, -1.0, 0.0); glTexCoord2f(0.29289, 0.7795); glVertex3f(1.0, -1.0, 5.0);
+        glNormal3f(0.0, -1.0, 0.0); glTexCoord2f(0.70710, 0.7795); glVertex3f(3.0, -1.0, 5.0);
+        glNormal3f(0.0, -1.0, 0.0); glTexCoord2f(0.70710, 0.0); glVertex3f(3.0, -1.0, 0.0);
 
-        glTexCoord2f(0.70710, 0.0); glVertex3f(3.0, -1.0, 0.0);
-        glTexCoord2f(0.70710, 0.7795); glVertex3f(3.0, -1.0, 5.0);
-        glTexCoord2f(1.0, 0.7795); glVertex3f(4.0, 0.0, 5.0);
-        glTexCoord2f(1.0, 0.0); glVertex3f(4.0, 0.0, 0.0);
+        glNormal3f(1.0, -1.0, 0.0); glTexCoord2f(0.70710, 0.0); glVertex3f(3.0, -1.0, 0.0);
+        glNormal3f(1.0, -1.0, 0.0); glTexCoord2f(0.70710, 0.7795); glVertex3f(3.0, -1.0, 5.0);
+        glNormal3f(1.0, -1.0, 0.0); glTexCoord2f(1.0, 0.7795); glVertex3f(4.0, 0.0, 5.0);
+        glNormal3f(1.0, -1.0, 0.0); glTexCoord2f(1.0, 0.0); glVertex3f(4.0, 0.0, 0.0);
 
         /* Rectangle on top */
         glTexCoord2f(0.29289, 0.7795); glVertex3f(1.0, -1.0, 5.0);
@@ -473,10 +473,10 @@ void CastleGame::DrawWall()
     glBegin(GL_QUADS);
 
     /* Top of the wall */
-    glTexCoord2f(0.0, 0.0); glVertex3f(-20, -20, 50);
-    glTexCoord2f(0.0, 0.7); glVertex3f(-20, 0, 50);
-    glTexCoord2f(1.0, 0.7); glVertex3f(20, 0,  50);
-    glTexCoord2f(1.0, 0.0); glVertex3f(20, -20, 50);
+    glNormal3f(0.0, 0.0, 1.0); glTexCoord2f(0.0, 0.0); glVertex3f(-20, -20, 50);
+    glNormal3f(0.0, 0.0, 1.0); glTexCoord2f(0.0, 0.7); glVertex3f(-20, 0, 50);
+    glNormal3f(0.0, 0.0, 1.0); glTexCoord2f(1.0, 0.7); glVertex3f(20, 0,  50);
+    glNormal3f(0.0, 0.0, 1.0); glTexCoord2f(1.0, 0.0); glVertex3f(20, -20, 50);
 
 
     glEnd();
