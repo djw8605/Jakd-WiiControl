@@ -72,10 +72,10 @@ CastleGame::CastleGame()
         for(int i = -1000; i < 1000; i+=200)
         {
 
-            glTexCoord2f(0.0, 0.0); glVertex3f((GLfloat)i, 0.0, 0.0);
-                glTexCoord2f(0.0, 1.0); glVertex3f((GLfloat)i, 2000.0, 0.0);
-                glTexCoord2f(1.0, 1.0); glVertex3f((GLfloat)i+200, 2000.0, 0.0);
-                glTexCoord2f(1.0, 0.0); glVertex3f((GLfloat)i+200, 0.0, 0.0);
+                glNormal3f(0.0, 0.0, 1.0); glTexCoord2f(0.0, 0.0); glVertex3f((GLfloat)i, 0.0, 0.0);
+                glNormal3f(0.0, 0.0, 1.0); glTexCoord2f(0.0, 1.0); glVertex3f((GLfloat)i, 2000.0, 0.0);
+                glNormal3f(0.0, 0.0, 1.0); glTexCoord2f(1.0, 1.0); glVertex3f((GLfloat)i+200, 2000.0, 0.0);
+                glNormal3f(0.0, 0.0, 1.0); glTexCoord2f(1.0, 0.0); glVertex3f((GLfloat)i+200, 0.0, 0.0);
 
 
         }
