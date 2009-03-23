@@ -165,5 +165,17 @@ void Camera::ShakeCamera(float intensity)
 }
 
 
+void Camera::GetPosition(float* buf)
+{
+    
+    buf[0] = eyeX;
+    buf[1] = eyeY;
+    buf[2] = eyeZ;
+    
+    return;
+    
+}
+
+
 
 

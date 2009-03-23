@@ -19,6 +19,8 @@ public:
 	void SetCameraLocation(float X, float Y, float Z, float newCenterX, float newCenterY, float newCenterZ);
 	
 	void ShakeCamera(float intensity);
+	
+	void GetPosition(float* buf);
 
 private:
 	float eyeX, eyeY, eyeZ;
