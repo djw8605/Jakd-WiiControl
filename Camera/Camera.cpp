@@ -15,6 +15,7 @@ Camera::Camera()
     eyeZ = 10.0;
     centerX = 0.0; centerY = 0.0; centerZ = 0.0; upX = 0.0; upY = 0.0; upZ = 1.0;
     shakeCounter = 100000.0;
+    m_cameraFreeze = false;
 }
 
 Camera::~Camera()
@@ -59,6 +60,8 @@ void Camera::positionCamera()
 
 void Camera::ProcessCoordinates(short dot1x, short dot1y, short dot2x, short dot2y)
 {
+    if(m_cameraFreeze)
+        return;
     /*
      * Mathy function to translate the points on a 2d plane to a 3d area
      *
@@ -159,6 +162,7 @@ void Camera::ShakeCamera(float intensity)
     if (intensity <= 0.0)
         return;
     
+    
     shakeCounter = 0.0;
     
     
@@ -176,6 +180,16 @@ void Camera::GetPosition(float* buf)
     
 }
 
+
+void Camera::FreezeCamera()
+{
+    m_cameraFreeze = true;
+}
+
+void Camera::UnFreezeCamera()
+{
+    m_cameraFreeze = false;
+}
 
 
 

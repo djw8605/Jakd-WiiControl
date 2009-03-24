@@ -21,6 +21,9 @@ public:
 	void ShakeCamera(float intensity);
 	
 	void GetPosition(float* buf);
+	
+	void FreezeCamera();
+	void UnFreezeCamera();
 
 private:
 	float eyeX, eyeY, eyeZ;
@@ -28,6 +31,8 @@ private:
 	float upX, upY, upZ;
 	float confCenterX, confCenterY, confCenterZ;
 	float shakeCounter;
+	bool m_cameraFreeze;
+
 };
 
 #endif /*CAMERA_H_*/

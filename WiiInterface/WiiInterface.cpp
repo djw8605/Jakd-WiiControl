@@ -199,6 +199,7 @@ void ProcessPlayerLocation()
         _camera->ProcessCoordinates(dots[0], dots[1], dots[2], dots[3]);
 
     } else {
+        wiiuse_set_ir(wiimotes[!playerWiiIndex], 1);
         return;
     }
 
