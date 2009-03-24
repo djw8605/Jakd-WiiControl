@@ -9,6 +9,7 @@
 #define SPHERE_SIZE 7.0
 #define eqn(x) 70*cos((x-375)/500)
 #define CATAPULT_START 3000.0
+#define CATAPULT_DMG -50.0
 
 float CatapultOften[] = { 10.0, 8.0, 7.0, 6.0 };
 
@@ -45,11 +46,12 @@ void Catapult::Render()
     {
         float camPos[3];
         _camera->GetPosition(camPos);
-        _camera->ShakeCamera(1.0);
+
 
         if(camPos[0] <= 0)
         {
-            _player->AffectPlayerHealth(-10.0);
+            _camera->ShakeCamera(1.0);
+            _player->AffectPlayerHealth(CATAPULT_DMG);
         }
         
         counter = CatapultOften[_player->GetLevel()];
