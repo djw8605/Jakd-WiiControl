@@ -1,6 +1,7 @@
 #ifndef ENEMY_H_
 #define ENEMY_H_
 
+#include "Math/Math.h"
 #include "ModelLoader/CModel3DS.h"
 
 #define MAX_ENEMY_VARIANCE 400             /* How wide the area that enemies can be made */
@@ -18,10 +19,12 @@ public:
 	void Render(float timeDiff);
 	void ReInit();
 	float GetY();
+	float DoIntersect(const ray &r);
 	
 private:
     float m_x, m_y;
     CModel3DS* m_model;
+    point m_p[4];
     
 };
 

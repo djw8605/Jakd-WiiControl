@@ -15,6 +15,7 @@
 #include "FreeType/FreeType.h"
 #include "CastleGame/CastleGame.h"
 #include "config.h"
+#include "TextPrinter/BitMapText.h"
 
 struct SceneNode {
     AbstractScene* scene;
@@ -169,10 +170,10 @@ AbstractScene* GetDisplayed()
 
 }
 
+freetype::font_data* font = NULL;
 freetype::font_data* GetFont()
 {
-    static freetype::font_data* font = NULL;
-
+    
     if (font == NULL)
     {
         try
@@ -208,6 +209,22 @@ void updateTime() {
     //store micoseconds of that second, so divide by million
     storeTime += ((double)t.tv_usec / 1000000);
 
+}
+
+
+void ShutDown()
+{
+    printf("Shutting down\n");
+    /* delete the scenes */
+    delete GetDisplayed();
+    
+    delete font;
+    
+    WiiShutDown();
+    KillFont();
+    
+
+    
 }
 
 

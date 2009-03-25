@@ -28,7 +28,8 @@ freetype::font_data* GetFont();
 /* Get the time difference from last render */
 double getTime();
 
-
+/* To shut everything down */
+void ShutDown();
 
 
 #endif /*DISPLAY_H_*/

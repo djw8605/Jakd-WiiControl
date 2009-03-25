@@ -11,9 +11,12 @@
 #include "TextPrinter/BitMapText.h"
 #include "CastleGame/Catapult.h"
 
+#include <float.h>
 #include <iostream>
 
 using namespace std;
+
+
 
 
 CastleGame::CastleGame()
@@ -84,9 +87,8 @@ CastleGame::CastleGame()
 
         glEndList();
 
-
-        m_enemies = new Enemy[10];
         m_numEnemies = 10;
+        m_enemies = new Enemy[m_numEnemies];
         m_picking = 0;
 
 
@@ -94,6 +96,8 @@ CastleGame::CastleGame()
 
 CastleGame::~CastleGame()
 {
+    for(int i =0; i < m_numEnemies; i++)
+        delete (m_enemies+i);
 
     glDeleteTextures(1, &pillarTex);
     glDeleteTextures(1, &fieldTex);
@@ -213,13 +217,77 @@ void CastleGame::Render()
 
 void CastleGame::Select(int x, int y)
 {
+    /* Testing */
+    ray r;
+    GLdouble pos3D_x, pos3D_y, pos3D_z;
+
+    // arrays to hold matrix information
+    _camera->positionCamera();
+    GLdouble model_view[16];
+    glGetDoublev(GL_MODELVIEW_MATRIX, model_view);
+
+    GLdouble projection[16];
+    glGetDoublev(GL_PROJECTION_MATRIX, projection);
+
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+            
+    // get 3D coordinates based on window coordinates
+
+    gluUnProject(x, m_h-y, 0.00,
+            model_view, projection, viewport,
+            &pos3D_x, &pos3D_y, &pos3D_z);
+
+    r.origin.x = (float)pos3D_x;
+    r.origin.y = (float)pos3D_y;
+    r.origin.z = (float)pos3D_z;
+    
+    //printf("%lf, %lf, %lf\n", r.origin.x, r.origin.y, r.origin.z);
+    gluUnProject(x, m_h-y, 1.00,
+             model_view, projection, viewport,
+             &pos3D_x, &pos3D_y, &pos3D_z);
+    //printf("%lf, %lf, %lf\n", pos3D_x, pos3D_y, pos3D_z);
+    
+    //ray r;
+    r.direction.x = (float)pos3D_x - r.origin.x;
+    r.direction.y = (float)pos3D_y - r.origin.y;
+    r.direction.z = (float)pos3D_z - r.origin.z;
+    
+    //printf("Ray, o = (%lf, %lf, %lf), d = (%lf, %lf, %lf)\n", r.origin.x, r.origin.y, r.origin.z, r.direction.x, r.direction.y, r.direction.z);
+    float distance = FLT_MAX;
+    int minIndex = -1;
+    float tmpDistance = 0.0;
+    for(int i = 0; i < m_numEnemies; i++)
+    {
+        tmpDistance = m_enemies[i].DoIntersect(r);
+        if((tmpDistance < distance) && (tmpDistance != 0.0))
+        {
+            distance = tmpDistance;
+            minIndex = i;
+        }
+       
+    }
+    //printf("Distance = %lf\n", distance);
+    if((distance != 0.0) && (minIndex != -1))
+    {
+        //printf("Killed %i\n", minIndex);
+        m_enemies[minIndex].ReInit();
+               _player->IncrementEnemiesKilled();
+               if((_player->GetEnemiesKilled() > 0) && ((_player->GetEnemiesKilled() % 20) == 0))
+               {
+                   _player->IncrementLevel();
+               }
+    }
+    
+
+    return;
     /* Now the wonders of opengl picking, ugh... */
     //printf("Selected: %i, %i\n", x, y);
     m_picking = 1;
 
     glPushMatrix();
     GLuint buffer[512];
-    GLint viewport[4];
+    //GLint viewport[4];
 
 
 

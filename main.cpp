@@ -8,6 +8,7 @@
 #include "config.h"
 #include <unistd.h>
 
+
 int useWiiMotes;
 
 
@@ -57,7 +58,8 @@ int main(int argc, char *argv[])
 
 	glutMainLoop();
 
-	WiiShutDown();
+	ShutDown();
+	
 
 
 

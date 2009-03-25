@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include <cstdio>
 #include "CastleGame/PlayerStats.h"
+#include "Math/Math.h"
 
 Enemy::Enemy()
 {
@@ -10,15 +11,36 @@ Enemy::Enemy()
     
     m_model = _player->GetEnemyModel();
 
+    /* For intersection points */
+    //m_p[0].x = 20.0;
+    m_p[0].y = 0.0;
+    m_p[0].z = 0.0;
+
+   //m_p[1].x = 20.0;
+    m_p[1].y = 0.0;
+    m_p[1].z = 25.0;
+
+    //m_p[2].x = 30.0;
+    m_p[2].y = 0.0;
+    m_p[2].z = 25.0;
+
+    //m_p[3].x = 30.0;
+    m_p[3].y = 0.0;
+    m_p[3].z = 0.0;
+
+
 }
 
 Enemy::~Enemy()
 {
+    printf("Enemy Deleted\n");
     delete m_model;
 }
 
 void Enemy::Render(float timeDiff)
 {
+    
+    
     glPushMatrix();
     //glLoadIdentity();
     /* Calculate new Y position */
@@ -35,6 +57,13 @@ void Enemy::Render(float timeDiff)
       glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, bodyspec);
     //glLoadIdentity();
     glTranslatef(m_x, m_y, 0.0);
+/*    glBegin(GL_QUADS);
+    glVertex3f(20.0, 0.0, 0.0);
+    glVertex3f(20.0, 0.0, 25.0);
+    glVertex3f(30.0, 0.0, 25.0);
+    glVertex3f(30.0, 0.0, 0.0);
+    glEnd();
+   */ 
     //glRotatef(90, 1.0, 0.0, 0.0);
     glScalef(0.03, 0.03, 0.03);
     glColor4f(1.0, 0.0, 0.0, 1.0);
@@ -73,6 +102,8 @@ void Enemy::ReInit()
     m_x = random;
     m_y = (float)(rand() % 1000) + ENEMY_STARTING_Y;
     
+    m_p[0].x = m_p[1].x = 20 + m_x;
+    m_p[2].x = m_p[3].x = 30 + m_x;
 
     
     
@@ -83,4 +114,19 @@ float Enemy::GetY()
     
     return this->m_y;
 }
+
+
+float Enemy::DoIntersect(const ray &r)
+{
+    //printf("y = %lf\n", m_y); 
+    m_p[0].y = m_p[1].y = m_p[2].y = m_p[3].y = m_y;
+
+    
+    return Intersect(r, m_p[0], m_p[1], m_p[2], m_p[3]);
+    
+    
+    
+    
+}
+
 
