@@ -176,7 +176,7 @@ void CastleGame::Render()
     //glPushName(1001);
     DrawGround();
     //glPopName();
-    
+
     _catapult->Render();
 
     float timeDiff = getTime();
@@ -194,7 +194,7 @@ void CastleGame::Render()
             if(m_enemies[i].GetY() < 0.0)
             {
                 m_enemies[i].ReInit();
-                
+
                 /* Take health away from the player */
                 _player->AffectWallHealth(-10.0);
                 _player->IncrementEnemiesNotKilled();
@@ -231,28 +231,28 @@ void CastleGame::Select(int x, int y)
 
     GLint viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport);
-            
+
     // get 3D coordinates based on window coordinates
 
-    gluUnProject(x, m_h-y, 0.00,
+    gluUnProject(x, m_h-y, 0.0001,
             model_view, projection, viewport,
             &pos3D_x, &pos3D_y, &pos3D_z);
 
     r.origin.x = (float)pos3D_x;
     r.origin.y = (float)pos3D_y;
     r.origin.z = (float)pos3D_z;
-    
+
     //printf("%lf, %lf, %lf\n", r.origin.x, r.origin.y, r.origin.z);
     gluUnProject(x, m_h-y, 1.00,
              model_view, projection, viewport,
              &pos3D_x, &pos3D_y, &pos3D_z);
     //printf("%lf, %lf, %lf\n", pos3D_x, pos3D_y, pos3D_z);
-    
+
     //ray r;
     r.direction.x = (float)pos3D_x - r.origin.x;
     r.direction.y = (float)pos3D_y - r.origin.y;
     r.direction.z = (float)pos3D_z - r.origin.z;
-    
+
     //printf("Ray, o = (%lf, %lf, %lf), d = (%lf, %lf, %lf)\n", r.origin.x, r.origin.y, r.origin.z, r.direction.x, r.direction.y, r.direction.z);
     float distance = FLT_MAX;
     int minIndex = -1;
@@ -265,7 +265,7 @@ void CastleGame::Select(int x, int y)
             distance = tmpDistance;
             minIndex = i;
         }
-       
+
     }
     //printf("Distance = %lf\n", distance);
     if((distance != 0.0) && (minIndex != -1))
@@ -278,7 +278,7 @@ void CastleGame::Select(int x, int y)
                    _player->IncrementLevel();
                }
     }
-    
+
 
     return;
     /* Now the wonders of opengl picking, ugh... */
@@ -327,7 +327,7 @@ void CastleGame::Select(int x, int y)
     //    selected = buffer[3];
     //else
      //   selected = -1;
-    
+
     selected = -1;
 
 
@@ -371,7 +371,7 @@ void CastleGame::Select(int x, int y)
     if (selected != -1)
     {
         //printf("Selected enemy: %i\n", selected);
-        
+
         m_enemies[selected].ReInit();
         _player->IncrementEnemiesKilled();
         if((_player->GetEnemiesKilled() > 0) && ((_player->GetEnemiesKilled() % 20) == 0))
@@ -587,8 +587,8 @@ void CastleGame::DrawGround()
 
 
     glPopMatrix();
-    
-    
+
+
 
 
 }

@@ -20,11 +20,11 @@ void WiiMotesInstalled();
 
 void SetWiiMoteLights()
 {
-    
+
     wiiuse_set_leds(wiimotes[playerWiiIndex], WIIMOTE_LED_1);
     wiiuse_set_leds(wiimotes[!playerWiiIndex], WIIMOTE_LED_2);
-    
-    
+
+
 }
 
 
@@ -34,7 +34,7 @@ void StartWiiMotes()
 
 	/* Initialize wiiuse */
 	wiimotes = wiiuse_init(MAX_WIIMOTES);
-	
+
 	/* Goal: to connect the 2 wiimotes, and determine which is in the player's hand */
     int foundWiimotes = 0;
     do
@@ -52,38 +52,38 @@ void StartWiiMotes()
         }
 
     } while (foundWiimotes != 2);
-    
+
     int connected = wiiuse_connect(wiimotes, MAX_WIIMOTES);
-    
-    if(connected != MAX_WIIMOTES) 
+
+    if(connected != MAX_WIIMOTES)
     {
         std::cout << "Unable to connect to wiimotes" << std::endl;
     }
-    
+
     numConnectedMotes = connected;
-    
+
     /* Now determine which is in the player's hand */
     std::cout << "Please press the A button on your wiimote..." << std::endl;
    detecting = true;
-    do 
+    do
     {
         /* Sleep for 10 microseconds, then process the wii events */
         usleep(10);
         ProcessWiiEvents();
-      
-        
+
+
     } while (detecting == true);
-    
-    
-    
+
+
+
      SetWiiMoteLights();
-     
+
      WiiMotesInstalled();
-     
+
      wiiuse_rumble(wiimotes[playerWiiIndex], 1);
      usleep(100000);
      wiiuse_rumble(wiimotes[playerWiiIndex], 0);
-	
+
 
 
 }
@@ -91,39 +91,39 @@ void StartWiiMotes()
 
 void handle_event(struct wiimote_t* wm, int index)
 {
-    
-   
+
+
 	if (IS_PRESSED(wm, WIIMOTE_BUTTON_A)) {
 	    if (detecting == true)
 	    {
 	        playerWiiIndex = index;
 	        detecting = false;
-	        
+
 	    }
-	    
-	    
+
+
 	}
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_B)) {
-        
+
         /* Don't care if we are currently looking for the players wiimote */
         if(detecting == true)
             return;
-        
+
         if(index == playerWiiIndex) {
 
             int points[2];
             _cursor->GetCurrentCursor(points);
-            
+
             GetDisplayed()->Select(points[0], points[1]);
-            
+
         }
-    
+
     }
-        
+
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_PLUS)) {
      //   _camera->ShakeCamera(10.0);
-        
-        
+
+
     }
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_UP))
     {
@@ -181,7 +181,7 @@ void ProcessPlayerLocation()
     if(dots < 2)
         printf("Not enough dots visible\n");
     */
-    
+
     /* Need at least 2 visible IR Dots */
     if(wiimotes[!playerWiiIndex]->ir.dot[0].visible && wiimotes[!playerWiiIndex]->ir.dot[1].visible)
     {
@@ -190,8 +190,8 @@ void ProcessPlayerLocation()
         dots[1] = wiimotes[!playerWiiIndex]->ir.dot[0].ry;
         dots[2] = wiimotes[!playerWiiIndex]->ir.dot[1].rx;
         dots[3] = wiimotes[!playerWiiIndex]->ir.dot[1].ry;
-        
-        for(int i = 0; i < 4; i++) 
+
+        for(int i = 0; i < 4; i++)
         {
             if (dots[i] == 0) dots[i] = 1;
         }
@@ -210,11 +210,11 @@ void ProcessPlayerLocation()
 
 void ProcessCursorLocation()
 {
-    
-    
+
+
     static short distanceBetweenX = 0;
     static short distanceBetweenY = 0;
-    
+
     if (wiimotes[playerWiiIndex]->ir.dot[0].visible
             && wiimotes[playerWiiIndex]->ir.dot[1].visible)
     {
@@ -222,10 +222,10 @@ void ProcessCursorLocation()
         short dot1y = wiimotes[playerWiiIndex]->ir.dot[0].ry;
         short dot2x = wiimotes[playerWiiIndex]->ir.dot[1].rx;
         short dot2y = wiimotes[playerWiiIndex]->ir.dot[1].ry;
-        
+
         distanceBetweenX = dot2x - dot1x;
         distanceBetweenY = dot2y - dot1y;
-        
+
         _cursor->ProcessCoordinates(dot1x, dot1y, dot2x, dot2y);
 
     }
@@ -233,7 +233,7 @@ void ProcessCursorLocation()
     {
         if (wiimotes[playerWiiIndex]->ir.num_dots == 1)
         {
-            short dot1x, dot1y; 
+            short dot1x, dot1y;
             if (wiimotes[playerWiiIndex]->ir.dot[0].visible)
             {
                 dot1x = wiimotes[playerWiiIndex]->ir.dot[0].rx;
@@ -243,34 +243,34 @@ void ProcessCursorLocation()
             {
                 dot1x = wiimotes[playerWiiIndex]->ir.dot[1].rx;
                 dot1y = wiimotes[playerWiiIndex]->ir.dot[1].ry;
-                
+
             }
-            
-           
-            
+
+
+
             short dot2x, dot2y;
-            
+
             if (dot1x < 512)
             {
-                
-                
-                
+
+
+
                 /* means dot2 was to the right, and we lost dot1 */
                 if (distanceBetweenX > 0) {
                     dot2x = dot1x  - distanceBetweenX;
                     dot2y = dot1y  - distanceBetweenY;
                 } else {
-                    
-                
+
+
                     dot2x = dot1x + distanceBetweenX;
-                
+
                     dot2y = dot1y + distanceBetweenY;
                 }
             }
             else
             {
-                
-                
+
+
                 /* Means dot2 was to the right, we lost dot2 */
                 if (distanceBetweenX > 0)
                 {
@@ -294,8 +294,8 @@ void ProcessCursorLocation()
             return;
         }
     }
-    
-    
+
+
 }
 
 void ProcessWiiEvents()
@@ -307,7 +307,8 @@ void ProcessWiiEvents()
     //if (numConnectedMotes < 2)
     //    return;
 
-    if (wiiuse_poll(wiimotes, MAX_WIIMOTES))
+    //if (wiiuse_poll(wiimotes, MAX_WIIMOTES))
+	while(wiiuse_poll(wiimotes, MAX_WIIMOTES))
     {
         int i = 0;
         for (; i< MAX_WIIMOTES; i++)
@@ -347,12 +348,12 @@ void ProcessWiiEvents()
 
 }
 
-void WiiShutDown() 
+void WiiShutDown()
 {
-    
+
     wiiuse_cleanup(wiimotes, MAX_WIIMOTES);
-    
-    
+
+
 }
 
 
