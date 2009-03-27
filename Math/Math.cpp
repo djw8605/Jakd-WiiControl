@@ -51,7 +51,8 @@ C = x1(y2-y3) + x2(y3-y1) + x3(y1-y2)
 D = -x1(y2*z3 - y3*z2) - x2(y3*z1 - y1*z3) - x3(y1*z2 - y2*z1)
  */
 
-
+    //printf("Ray, o = (%lf, %lf, %lf), d = (%lf, %lf, %lf)\n", r.origin.x, r.origin.y, r.origin.z, r.direction.x, r.direction.y, r.direction.z);
+        
 	float A =v1.y*(v2.z-v3.z) + v2.y*(v3.z - v1.z) + v3.y*(v1.z - v2.z);
 	float B = v1.z*(v2.x-v3.x) + v2.z*(v3.x-v1.x) + v3.z*(v1.x-v2.x);
 	float C = v1.x*(v2.y-v3.y)+v2.x*(v3.y-v1.y) + v3.x*(v1.y-v2.y);
@@ -69,7 +70,7 @@ D = -x1(y2*z3 - y3*z2) - x2(y3*z1 - y1*z3) - x3(y1*z2 - y2*z1)
 	intPoint.x = r.origin.x + r.direction.x*t;
 	intPoint.y = r.origin.y + r.direction.y*t;
 	intPoint.z = r.origin.z + r.direction.z*t;
-	intPoint.z *= -1.0;
+	//intPoint.z *= -1.0;
 
 	vector vv1, vv2, vv3, vv4, vv5;
 	vv1 = ToVector(v1, v2);
@@ -82,6 +83,7 @@ D = -x1(y2*z3 - y3*z2) - x2(y3*z1 - y1*z3) - x3(y1*z2 - y2*z1)
 	//printf("Testing %lf, %lf, %lf %lf\n", v1.z, v2.z, v1.x, v3.x);
 	//printf("Testing %lf, %lf\n", intPoint.z, intPoint.x);
 
+	
 
 	if ( (intPoint.z > v1.z) && (intPoint.z < v2.z) && (intPoint.x > v1.x) && (intPoint.x < v3.x))
 	{

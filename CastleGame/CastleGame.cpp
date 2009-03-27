@@ -16,8 +16,12 @@
 
 using namespace std;
 
+//#define PICKING_DEBUG
 
-
+#ifdef PICKING_DEBUG
+void AddLine(point p1, point p2);
+void RenderLines();
+#endif
 
 CastleGame::CastleGame()
 {
@@ -173,6 +177,9 @@ void CastleGame::Render()
     DrawCastle();
     glPopName();
 
+#ifdef PICKING_DEBUG
+    RenderLines();
+#endif // PICKING_DEBUG
     //glPushName(1001);
     DrawGround();
     //glPopName();
@@ -221,6 +228,7 @@ void CastleGame::Select(int x, int y)
     ray r;
     GLdouble pos3D_x, pos3D_y, pos3D_z;
 
+    glLoadIdentity();
     // arrays to hold matrix information
     _camera->positionCamera();
     GLdouble model_view[16];
@@ -234,7 +242,7 @@ void CastleGame::Select(int x, int y)
 
     // get 3D coordinates based on window coordinates
 
-    gluUnProject(x, m_h-y, 0.0001,
+    gluUnProject(x, y, 0.0001,
             model_view, projection, viewport,
             &pos3D_x, &pos3D_y, &pos3D_z);
 
@@ -243,7 +251,7 @@ void CastleGame::Select(int x, int y)
     r.origin.z = (float)pos3D_z;
 
     //printf("%lf, %lf, %lf\n", r.origin.x, r.origin.y, r.origin.z);
-    gluUnProject(x, m_h-y, 1.00,
+    gluUnProject(x, y, 1.00,
              model_view, projection, viewport,
              &pos3D_x, &pos3D_y, &pos3D_z);
     //printf("%lf, %lf, %lf\n", pos3D_x, pos3D_y, pos3D_z);
@@ -252,6 +260,15 @@ void CastleGame::Select(int x, int y)
     r.direction.x = (float)pos3D_x - r.origin.x;
     r.direction.y = (float)pos3D_y - r.origin.y;
     r.direction.z = (float)pos3D_z - r.origin.z;
+    
+    /* Debugging stuff */
+#ifdef PICKING_DEBUG
+    point p; 
+    p.x = (float)pos3D_x;
+    p.y = (float)pos3D_y;
+    p.z = (float)pos3D_z;
+    AddLine(r.origin, p);
+#endif //PICKING_DEBUG
 
     //printf("Ray, o = (%lf, %lf, %lf), d = (%lf, %lf, %lf)\n", r.origin.x, r.origin.y, r.origin.z, r.direction.x, r.direction.y, r.direction.z);
     float distance = FLT_MAX;
@@ -278,7 +295,6 @@ void CastleGame::Select(int x, int y)
                    _player->IncrementLevel();
                }
     }
-
 
     return;
     /* Now the wonders of opengl picking, ugh... */
@@ -593,10 +609,68 @@ void CastleGame::DrawGround()
 
 }
 
+#ifdef PICKING_DEBUG
 
 
+typedef struct _dualpoints
+{
+    point p1;
+    point p2;
+    _dualpoints* next;
+} dualpoints;
 
 
+dualpoints* head = NULL;
 
+void AddLine(point p1, point p2)
+{
+    if(head == NULL)
+    {
+        head = new dualpoints;
+        head->p1 = p1;
+        head->p2 = p2;
+        head->next = 0;
+    } else {
+        
+        dualpoints* tmp = head;
+        while(tmp->next != NULL)
+            tmp = tmp->next;
+        tmp->next = new dualpoints;
+        tmp->next->p1 = p1;
+        tmp->next->p2 = p2;
+        tmp->next->next = 0;
+        
+    }
+    
+}
+
+void RenderLines()
+{
+    dualpoints* tmp = head;
+    glPushMatrix();
+    
+    GLfloat bodyamb[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat bodydif[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat bodyspec[] = { 1.0, 1.0, 0.0, 1.0 };
+
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, bodyamb);
+      glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, bodydif);
+      glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, bodyspec);
+    
+    glBegin(GL_LINES);
+    
+    while(tmp != 0)
+    {
+        glVertex3f(tmp->p1.x, tmp->p1.y, tmp->p1.z);
+        glVertex3f(tmp->p2.x, tmp->p2.y, tmp->p2.z);
+        tmp = tmp->next;
+    }
+    glEnd();
+    glPopMatrix();
+    
+}
+
+
+#endif // PICKING_DEBUG
 
 
