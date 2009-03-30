@@ -215,6 +215,7 @@ void updateTime() {
 void ShutDown()
 {
     printf("Shutting down\n");
+    fflush(stdout);
     /* delete the scenes */
     delete GetDisplayed();
     
