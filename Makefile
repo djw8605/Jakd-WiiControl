@@ -15,7 +15,7 @@ INCLUDES = -Iwiiuse/src/ -I.
 
 CPPFLAGS =  -Wall -g -fPIC -funroll-loops $(INCLUDES) $(FREETYPE_CFLAGS) $(LIB3DS_CFLAGS) $(SDL_CFLAGS)
 CXXFLAGS = 
-LIBS = -lglut -lm -lGL -lGLU -lwiiuse $(FREETYPE_LIBS) $(LIB3DS_LIBS) $(SDL_LIBS)
+LIBS = -lglut -lm -lGL -lGLU -lwiiuse $(FREETYPE_LIBS) $(LIB3DS_LIBS) $(SDL_LIBS) -lSDL_mixer
 LDFLAGS = -L$(WIIUSE_DIR)
 
 CXX = g++

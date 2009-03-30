@@ -10,6 +10,7 @@
 #include "display.h"
 #include "TextPrinter/BitMapText.h"
 #include "CastleGame/Catapult.h"
+#include "Audio/Audio.h"
 
 #include <float.h>
 #include <iostream>
@@ -94,6 +95,10 @@ CastleGame::CastleGame()
         m_numEnemies = 10;
         m_enemies = new Enemy[m_numEnemies];
         m_picking = 0;
+        
+        
+        /* Audio Testing */
+        _audio->PlaySound("Media/Arrow_Swoosh.wav");
 
 
 }
@@ -225,6 +230,8 @@ void CastleGame::Render()
 void CastleGame::Select(int x, int y)
 {
     /* Testing */
+    
+    _audio->PlaySound("Media/Arrow_Swoosh.wav");
     ray r;
     GLdouble pos3D_x, pos3D_y, pos3D_z;
 

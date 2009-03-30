@@ -9,6 +9,7 @@ public:
 	Audio();
 	virtual ~Audio();
 	static Audio* GetInstance();
+	void PlaySound(const char* audioFile);
 	
 private:
         bool initialized;

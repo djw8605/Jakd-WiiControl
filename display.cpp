@@ -16,6 +16,7 @@
 #include "CastleGame/CastleGame.h"
 #include "config.h"
 #include "TextPrinter/BitMapText.h"
+#include "Audio/Audio.h"
 
 struct SceneNode {
     AbstractScene* scene;
@@ -220,6 +221,8 @@ void ShutDown()
     delete GetDisplayed();
     
     delete font;
+    
+    delete _audio;
     
     WiiShutDown();
     KillFont();
