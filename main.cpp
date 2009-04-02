@@ -14,16 +14,20 @@ int useWiiMotes;
 
 int main(int argc, char *argv[])
 {
+        int windowWidth = 1024;
+        int windowHeight = 768;
 	useWiiMotes = 1;
 	/* Process Arguments */
 
 	int option_char;
 
-	while((option_char = getopt(argc, argv, "n")) != -1)
+	while((option_char = getopt(argc, argv, "nw:h:")) != -1)
 	{
 	    switch (option_char)
 	    {
 	    case 'n': useWiiMotes = 0; break;
+	    case 'w': windowWidth = atoi(optarg);
+	    case 'h': windowHeight = atoi(optarg);
 
 	    }
 
@@ -38,7 +42,7 @@ int main(int argc, char *argv[])
 	/* Setup Window */
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(1024, 768);
+	glutInitWindowSize(windowWidth, windowHeight);
 	glutInitWindowPosition(0,0);
 	glutCreateWindow("WiiControl");
 	//glutFullScreen();
