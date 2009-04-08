@@ -80,7 +80,7 @@ Mix_Chunk* Audio::FindAudio(const char* audioFile)
 	tmp = audioList;
 	while(tmp != 0)
 	{
-		if(strcmp(tmp->name, audioFile) != 0)
+		if(strcmp(tmp->name, audioFile) == 0)
 			return tmp->sound;
 		tmp = tmp->next;
 	}
