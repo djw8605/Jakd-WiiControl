@@ -94,7 +94,6 @@ Mix_Chunk* Audio::FindAudio(const char* audioFile)
 		return NULL;
 	}
 
-	printf("Adding\n");
 	AudioSave* tmpAudio = new AudioSave;
 	tmpAudio->name = new char[strlen(audioFile) + 1];
 	strcpy(tmpAudio->name, audioFile);
