@@ -4,6 +4,7 @@
 #include <cmath>
 #include "Camera/Camera.h"
 #include "CastleGame/PlayerStats.h"
+#include "Audio/Audio.h"
 
 #define CATAPULT_SPEED 200.0
 #define SPHERE_SIZE 7.0
@@ -34,12 +35,12 @@ Catapult* Catapult::GetInstance()
 
 void Catapult::Render()
 {
-    
+
     /* Check if we should even render the catapult */
     counter -= getTime();
     if(counter > 0)
         return;
-    
+
     /* Ok, check if it's hitting the wall now */
     //printf("%lf\n", pos[1]);
     if(pos[1] <= 0.0)
@@ -52,17 +53,18 @@ void Catapult::Render()
         {
             _camera->ShakeCamera(1.0);
             _player->AffectPlayerHealth(CATAPULT_DMG);
+            _audio->PlaySound("Media/explosionTry.wav");
         }
-        
+
         counter = CatapultOften[_player->GetLevel()];
         pos[1] = CATAPULT_START;
-        
+
     }
-    
+
     GLfloat bodyamb[] = { 0.2, 0.2, 0.2, 1.0 };
        GLfloat bodydif[] = { 0.2, 0.2, 0.2, 1.0 };
        GLfloat bodyspec[] = { 0.2, 0.2, 0.2, 1.0 };
-    
+
     glPushMatrix();
 
     pos[0] = 0;
@@ -70,13 +72,13 @@ void Catapult::Render()
     pos[2] = eqn(pos[1]);
 
     glTranslatef(pos[0], pos[1], pos[2]);
-    
+
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, bodyamb);
           glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, bodydif);
           glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, bodyspec);
-    
+
     glutSolidSphere(SPHERE_SIZE, 10, 10);
-    
+
     glPopMatrix();
 }
 
@@ -86,6 +88,6 @@ void Catapult::GetCurrentPos(float* buf)
     buf[0] = pos[0];
     buf[1] = pos[1];
     buf[2] = pos[2];
-    
+
 }
 

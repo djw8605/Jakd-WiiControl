@@ -95,10 +95,10 @@ CastleGame::CastleGame()
         m_numEnemies = 10;
         m_enemies = new Enemy[m_numEnemies];
         m_picking = 0;
-        
-        
+
+
         /* Audio Testing */
-        _audio->PlaySound("Media/Arrow_Swoosh.wav");
+        //_audio->PlaySound("Media/Arrow_Swoosh.wav");
 
 
 }
@@ -230,8 +230,8 @@ void CastleGame::Render()
 void CastleGame::Select(int x, int y)
 {
     /* Testing */
-    
-    _audio->PlaySound("Media/Arrow_Swoosh.wav");
+
+    _audio->PlaySound("Media/Arrow_Swoosh2.wav");
     ray r;
     GLdouble pos3D_x, pos3D_y, pos3D_z;
 
@@ -267,10 +267,10 @@ void CastleGame::Select(int x, int y)
     r.direction.x = (float)pos3D_x - r.origin.x;
     r.direction.y = (float)pos3D_y - r.origin.y;
     r.direction.z = (float)pos3D_z - r.origin.z;
-    
+
     /* Debugging stuff */
 #ifdef PICKING_DEBUG
-    point p; 
+    point p;
     p.x = (float)pos3D_x;
     p.y = (float)pos3D_y;
     p.z = (float)pos3D_z;
@@ -638,7 +638,7 @@ void AddLine(point p1, point p2)
         head->p2 = p2;
         head->next = 0;
     } else {
-        
+
         dualpoints* tmp = head;
         while(tmp->next != NULL)
             tmp = tmp->next;
@@ -646,16 +646,16 @@ void AddLine(point p1, point p2)
         tmp->next->p1 = p1;
         tmp->next->p2 = p2;
         tmp->next->next = 0;
-        
+
     }
-    
+
 }
 
 void RenderLines()
 {
     dualpoints* tmp = head;
     glPushMatrix();
-    
+
     GLfloat bodyamb[] = { 1.0, 1.0, 0.0, 1.0 };
     GLfloat bodydif[] = { 1.0, 1.0, 0.0, 1.0 };
     GLfloat bodyspec[] = { 1.0, 1.0, 0.0, 1.0 };
@@ -663,9 +663,9 @@ void RenderLines()
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, bodyamb);
       glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, bodydif);
       glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, bodyspec);
-    
+
     glBegin(GL_LINES);
-    
+
     while(tmp != 0)
     {
         glVertex3f(tmp->p1.x, tmp->p1.y, tmp->p1.z);
@@ -674,7 +674,7 @@ void RenderLines()
     }
     glEnd();
     glPopMatrix();
-    
+
 }
 
 
