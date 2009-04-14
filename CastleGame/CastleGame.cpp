@@ -616,6 +616,20 @@ void CastleGame::DrawGround()
 
 }
 
+
+void CastleGame::Reset()
+{
+	for(int i = 0; i < m_numEnemies; i++)
+		m_enemies[i].ReInit();
+
+	_catapult->Reinit();
+
+	_player->Reset();
+
+
+}
+
+
 #ifdef PICKING_DEBUG
 
 

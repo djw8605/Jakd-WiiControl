@@ -125,6 +125,13 @@ void handle_event(struct wiimote_t* wm, int index)
 
 
     }
+
+    if(IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_HOME)) {
+
+    	GetDisplayed()->Reset();
+
+    }
+
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_UP))
     {
         printf("UP pressed\n");

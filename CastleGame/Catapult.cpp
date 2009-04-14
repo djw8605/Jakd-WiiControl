@@ -91,3 +91,15 @@ void Catapult::GetCurrentPos(float* buf)
 
 }
 
+
+void Catapult::Reinit()
+{
+    pos[0] = 0.0;
+    pos[1] = CATAPULT_START;
+    pos[2] = 0.0;
+    counter = 0.0;
+
+
+}
+
+

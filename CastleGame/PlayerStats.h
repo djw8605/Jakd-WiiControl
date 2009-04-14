@@ -14,32 +14,34 @@ public:
 	PlayerStats();
 	virtual ~PlayerStats();
 	static PlayerStats* GetInstance();
-	
+
 	/* Player Health functions */
 	float GetPlayerHealth();
 	float GetPlayerPerc();
 	float AffectPlayerHealth(float amount);
-	
+
 	/* Wall Health Functions */
 	float GetWallHealth();
 	float GetWallPerc();
 	float AffectWallHealth(float amount);
-	
+
 	/* Level constant stuff */
 	int GetLevel();
 	void IncrementLevel();
-	
+
 	/* Enemy Stats */
 	int GetEnemiesKilled();
 	int GetEnemiesNotKilled();
 	void IncrementEnemiesKilled();
 	void IncrementEnemiesNotKilled();
-	
+
 	/* Models */
 	CModel3DS* GetEnemyModel();
-	
-	
-	
+
+	/* to Reset */
+	void Reset();
+
+
 private:
     float m_playerHealth;
     float m_wallHealth;

@@ -11,7 +11,8 @@ public:
 	virtual void DeInit();                 /* DeInitialize the scene */
 	virtual void Select(int x, int y);     /* Select a portion of the screen, such as a mouse click */
 	virtual void Reshape(int w, int h);
-	
+	virtual void Reset();
+
 };
 
 #endif /*ABSTRACTSCENE_H_*/

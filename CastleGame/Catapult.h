@@ -11,12 +11,13 @@ public:
 	void Render();
 	static Catapult* GetInstance();
 	void GetCurrentPos(float* buf);
-	
+	void Reinit();
+
 private:
     float pos[3];
     float counter;
-    
-    
+
+
 };
 
 #endif /*CATAPULT_H_*/
