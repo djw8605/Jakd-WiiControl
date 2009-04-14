@@ -20,10 +20,11 @@ public:
 	virtual ~Audio();
 	static Audio* GetInstance();
 	void PlaySound(const char* audioFile);
-	Mix_Chunk* FindAudio(const char* audioFile);
+
 
 
 private:
+	Mix_Chunk* FindAudio(const char* audioFile);
     AudioSave* audioList;
 	bool initialized;
 };

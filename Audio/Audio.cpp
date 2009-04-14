@@ -51,7 +51,8 @@ void Audio::PlaySound(const char* audioFile)
 
     Mix_Chunk *sound = NULL;
 
-    sound = Mix_LoadWAV(audioFile);
+    sound = FindAudio(audioFile);
+
     if(sound == NULL) {
             fprintf(stderr, "Unable to load WAV file: %s\n", Mix_GetError());
             return;
@@ -64,7 +65,6 @@ void Audio::PlaySound(const char* audioFile)
             fprintf(stderr, "Unable to play WAV file: %s\n", Mix_GetError());
             return;
     }
-
 
 
 }
@@ -94,7 +94,7 @@ Mix_Chunk* Audio::FindAudio(const char* audioFile)
 		return NULL;
 	}
 
-
+	printf("Adding\n");
 	AudioSave* tmpAudio = new AudioSave;
 	tmpAudio->name = new char[strlen(audioFile) + 1];
 	strcpy(tmpAudio->name, audioFile);
@@ -104,14 +104,17 @@ Mix_Chunk* Audio::FindAudio(const char* audioFile)
 	/* Add to the list */
 	if (!audioList) {
 		audioList = tmpAudio;
+
 	} else {
 		tmp = audioList;
 		while(tmp->next != 0)
 			tmp = tmp->next;
 
 		tmp->next = tmpAudio;
+
 	}
 
+	return tmpAudio->sound;
 
 
 }
