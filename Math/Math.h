@@ -1,6 +1,6 @@
 
-#ifndef _VECTOR_H
-#define _VECTOR_H
+#ifndef _DEREKMATH_H
+#define _DEREKMATH_H
 
 struct point {
 	float x, y, z;
