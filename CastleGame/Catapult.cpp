@@ -53,8 +53,10 @@ void Catapult::Render()
         {
             _camera->ShakeCamera(1.0);
             _player->AffectPlayerHealth(CATAPULT_DMG);
+        } else {
             _audio->PlaySound("Media/explosionTry.wav");
-        }
+            _camera->ShakeCamera(1.0);
+	}
 
         counter = CatapultOften[_player->GetLevel()];
         pos[1] = CATAPULT_START;
